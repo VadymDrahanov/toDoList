@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.example.zaribatodolist.data.repository.AuthRepository
 import com.example.zaribatodolist.databinding.FragmentUserProfileBinding
 
 
@@ -25,7 +26,7 @@ class UserProfileFragment : Fragment() {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val viewModelFactory = UserProfileViewModelFactory(10)
+        val viewModelFactory = UserProfileViewModelFactory(10, AuthRepository(requireContext()))
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserProfileViewModel::class.java)
         viewModel.apply {
             setUserName()
@@ -43,6 +44,9 @@ class UserProfileFragment : Fragment() {
             viewModel.setUserAge()
         }
 
+        binding.buttonworkin.setOnClickListener {
+            viewModel.isWorking()
+        }
         return view
     }
 

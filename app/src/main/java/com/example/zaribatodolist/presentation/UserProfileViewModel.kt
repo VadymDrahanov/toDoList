@@ -3,8 +3,9 @@ package com.example.zaribatodolist.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.zaribatodolist.data.repository.AuthRepository
 
-class UserProfileViewModel(private val arg: Int) : ViewModel() {
+class UserProfileViewModel(private val arg: Int, private val repository: AuthRepository) : ViewModel() {
 
     val nameLive = MutableLiveData<String>()
 
@@ -19,10 +20,14 @@ class UserProfileViewModel(private val arg: Int) : ViewModel() {
             ageLive.value = it + arg
         }
     }
+
+    fun isWorking(){
+        repository.isWorking()
+    }
 }
 
-class UserProfileViewModelFactory(val arg: Int) : ViewModelProvider.Factory{
+class UserProfileViewModelFactory(private val arg: Int,private val repository: AuthRepository) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(Int::class.java).newInstance(arg)
+        return modelClass.getConstructor(Int::class.java, AuthRepository::class.java).newInstance(arg, repository)
     }
 }
