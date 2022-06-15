@@ -5,29 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.zaribatodolist.data.repository.AuthRepository
 
-class UserProfileViewModel(private val arg: Int, private val repository: AuthRepository) : ViewModel() {
+class UserProfileViewModel(private val repository: AuthRepository) : ViewModel() {
 
     val nameLive = MutableLiveData<String>()
 
-    val ageLive = MutableLiveData<Int>(0)
-
-    fun setUserName() {
-        nameLive.value = "John Doe"
+    fun setUserName(name: String) {
+        nameLive.value = repository.getString(name)
     }
 
-    fun setUserAge() {
-        ageLive.value?.let {
-            ageLive.value = it + arg
-        }
-    }
-
-    fun isWorking(){
-        repository.isWorking()
-    }
 }
 
-class UserProfileViewModelFactory(private val arg: Int,private val repository: AuthRepository) : ViewModelProvider.Factory{
+class UserProfileViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(Int::class.java, AuthRepository::class.java).newInstance(arg, repository)
+        return modelClass.getConstructor(AuthRepository::class.java).newInstance(repository)
     }
 }

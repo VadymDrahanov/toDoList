@@ -26,27 +26,20 @@ class UserProfileFragment : Fragment() {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val viewModelFactory = UserProfileViewModelFactory(10, AuthRepository(requireContext()))
+        val viewModelFactory = UserProfileViewModelFactory(AuthRepository(requireContext()))
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserProfileViewModel::class.java)
         viewModel.apply {
-            setUserName()
 
             nameLive.observe(viewLifecycleOwner) { text ->
                 binding.userNameTV.text = text
             }
 
-            ageLive.observe(viewLifecycleOwner) { text->
-                binding.userAgeTV.text = text.toString()
-            }
         }
 
         binding.button.setOnClickListener {
-            viewModel.setUserAge()
+            viewModel.setUserName(binding.editTextTextPersonName.text.toString())
         }
 
-        binding.buttonworkin.setOnClickListener {
-            viewModel.isWorking()
-        }
         return view
     }
 
