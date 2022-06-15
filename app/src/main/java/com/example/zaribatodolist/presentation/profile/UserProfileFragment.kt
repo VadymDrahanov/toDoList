@@ -1,12 +1,10 @@
-package com.example.zaribatodolist.presentation
+package com.example.zaribatodolist.presentation.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.example.zaribatodolist.data.repository.AuthRepository
 import com.example.zaribatodolist.databinding.FragmentUserProfileBinding
 
 
@@ -26,8 +24,8 @@ class UserProfileFragment : Fragment() {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val viewModelFactory = UserProfileViewModelFactory(AuthRepository(requireContext()))
-        viewModel = ViewModelProvider(this, viewModelFactory).get(UserProfileViewModel::class.java)
+        //val viewModelFactory = UserProfileViewModelFactory(AuthRepository(requireContext()))
+       // viewModel = ViewModelProvider(this, viewModelFactory).get(UserProfileViewModel::class.java)
         viewModel.apply {
 
             nameLive.observe(viewLifecycleOwner) { text ->
@@ -37,7 +35,7 @@ class UserProfileFragment : Fragment() {
         }
 
         binding.button.setOnClickListener {
-            viewModel.setUserName(binding.editTextTextPersonName.text.toString())
+           // viewModel.setUserName(binding.editTextTextPersonName.text.toString())
         }
 
         return view
