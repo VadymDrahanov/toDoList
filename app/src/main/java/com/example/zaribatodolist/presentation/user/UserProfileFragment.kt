@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.presentation.profile
+package com.example.zaribatodolist.presentation.user
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.zaribatodolist.databinding.FragmentUserProfileBinding
 
 
-class UserProfileFragment : Fragment() {
+public class UserProfileFragment : Fragment() {
 
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
@@ -26,13 +26,13 @@ class UserProfileFragment : Fragment() {
 
         //val viewModelFactory = UserProfileViewModelFactory(AuthRepository(requireContext()))
        // viewModel = ViewModelProvider(this, viewModelFactory).get(UserProfileViewModel::class.java)
-        viewModel.apply {
-
-            nameLive.observe(viewLifecycleOwner) { text ->
-                binding.userNameTV.text = text
-            }
-
-        }
+//        viewModel.apply {
+//
+//            nameLive.observe(viewLifecycleOwner) { text ->
+//                binding.userNameTV.text = text
+//            }
+//
+//        }
 
         binding.button.setOnClickListener {
            // viewModel.setUserName(binding.editTextTextPersonName.text.toString())

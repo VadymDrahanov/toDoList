@@ -18,7 +18,6 @@ class AuthRepository(private val context: Context) {
     private var user : FirebaseUser? = auth.currentUser
 
     private val _currentUser = MutableLiveData<FirebaseUser>()
-    val currentUser: LiveData<FirebaseUser> = _currentUser
 
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(context.getString(R.string.default_web_client_id))
@@ -27,13 +26,15 @@ class AuthRepository(private val context: Context) {
 
     val googleSignInClient = GoogleSignIn.getClient(context, gso)
 
-    fun firebaseAuthWithGoogle(idToken: String) {
+    fun firebaseAuthWithGoogle(idToken: String) : FirebaseUser? {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                  user = auth.currentUser
+
             }
         }
+        return user
     }
 
     fun getFirebaseUser() : FirebaseUser? {

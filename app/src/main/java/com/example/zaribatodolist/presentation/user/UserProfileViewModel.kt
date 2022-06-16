@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.presentation.profile
+package com.example.zaribatodolist.presentation.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
