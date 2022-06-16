@@ -1,21 +1,24 @@
 package com.example.zaribatodolist.data.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.zaribatodolist.R
+import com.example.zaribatodolist.data.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase as Firebase
 
 class AuthRepository(private val context: Context) {
 
     private var auth: FirebaseAuth = Firebase.auth
     private var user : FirebaseUser? = auth.currentUser
+    private var db = Firebase.firestore
+
 
     private val _currentUser = MutableLiveData<FirebaseUser>()
 
@@ -40,4 +43,12 @@ class AuthRepository(private val context: Context) {
     fun getFirebaseUser() : FirebaseUser? {
         return auth.currentUser
     }
+
+    fun writeUserToFireStore(){
+        var user = User("asdfasdf", null, "s")
+        db.collection("users").add(user).addOnSuccessListener { result ->
+
+        }
+    }
+
 }

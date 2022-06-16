@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/circle_shape.xml" value="0.195" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/custom_checkbox.xml" value="0.195" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/star_checked.xml" value="0.196" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/star_unchecked.xml" value="0.196" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/activity_auth.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_task_list.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_user_profile.xml" value="0.2" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/item_task.xml" value="0.33" />
       </map>
     </option>
   </component>

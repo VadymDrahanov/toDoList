@@ -3,15 +3,11 @@ package com.example.zaribatodolist.presentation.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.zaribatodolist.MainActivity
 
-import com.example.zaribatodolist.data.repository.AuthRepository
 import com.example.zaribatodolist.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -31,9 +27,10 @@ class AuthActivity : AppCompatActivity() {
         setContentView(view)
 
         //refactor it
-        val factory = AuthViewModelFactory(AuthRepository(applicationContext))
+        //val factory = AuthViewModelFactory(AuthRepository(applicationContext))
 
-        viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+        //viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+        viewModel = CustomViewModelFactory().getViewModel("aa", this) as AuthViewModel
         viewModel.getFirebaseUser()
 
         val observer = Observer<FirebaseUser> { user ->
@@ -58,8 +55,6 @@ class AuthActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-
-
 
         binding.signInWithGoogleBtn.setOnClickListener {
             getAction.launch(viewModel.getGoogleSignInGoogle().signInIntent)
