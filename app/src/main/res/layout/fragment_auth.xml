@@ -8,8 +8,12 @@
 
     <Button
         android:id="@+id/signInWithGoogleBtn"
-        android:layout_width="wrap_content"
+        style="@style/MaterialAlertDialog.Material3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/circle_shape"
         android:backgroundTint="@color/purple_200"
         android:paddingStart="20dp"
@@ -37,7 +41,7 @@
         android:fontFamily="@font/acme"
         android:text="Welcome!"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/signInWithGoogleBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
