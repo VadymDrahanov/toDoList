@@ -16,9 +16,6 @@ import com.google.firebase.auth.FirebaseUser
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
-    private lateinit var viewModel: AuthViewModel
-    var firebaseUser: FirebaseUser? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,39 +23,6 @@ class AuthActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        //refactor it
-        //val factory = AuthViewModelFactory(AuthRepository(applicationContext))
-
-        //viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
-        viewModel = CustomViewModelFactory().getViewModel("aa", this) as AuthViewModel
-        viewModel.getFirebaseUser()
-
-        val observer = Observer<FirebaseUser> { user ->
-            firebaseUser = user
-            if(firebaseUser != null){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        viewModel.userLiveData.observe(this, observer)
-
-
-        val getAction =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(it?.data)
-
-                val account = task.getResult(ApiException::class.java)!!
-
-                if(viewModel.firebaseAuthWithGoogle(account.idToken!!) != null){
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-
-        binding.signInWithGoogleBtn.setOnClickListener {
-            getAction.launch(viewModel.getGoogleSignInGoogle().signInIntent)
-        }
     }
 }
 
