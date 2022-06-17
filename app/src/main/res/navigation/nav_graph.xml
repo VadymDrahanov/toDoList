@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/taskList">
+    app:startDestination="@id/holderFragment">
 
     <fragment
         android:id="@+id/userProfileFragment"
@@ -15,4 +15,9 @@
         android:name="com.example.zaribatodolist.presentation.takslist.TaskListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" />
+    <fragment
+        android:id="@+id/holderFragment"
+        android:name="com.example.zaribatodolist.presentation.fragmentHolder.HolderFragment"
+        android:label="holder_fragment"
+        tools:layout="@layout/holder_fragment" />
 </navigation>

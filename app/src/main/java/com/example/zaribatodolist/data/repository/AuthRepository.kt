@@ -19,34 +19,34 @@ import com.google.firebase.ktx.Firebase as Firebase
 class AuthRepository(private val context: Context) {
 
     private var auth: FirebaseAuth = Firebase.auth
-    private var firebaseUser : FirebaseUser? = auth.currentUser
+    private var firebaseUser: FirebaseUser? = auth.currentUser
     private var db = Firebase.firestore
 
-
-    private val _currentUser = MutableLiveData<FirebaseUser>()
-
-    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(context.getString(R.string.default_web_client_id))
         .requestEmail()
         .build()
 
     val googleSignInClient = GoogleSignIn.getClient(context, gso)
 
-    fun firebaseAuthWithGoogle(idToken: String) : FirebaseUser? {
+    fun firebaseAuthWithGoogle(idToken: String): FirebaseUser? {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 firebaseUser = auth.currentUser
-                val user = User(auth.currentUser?.uid, auth.currentUser?.email,null,  auth.currentUser?.displayName)
+                val user = User(
+                    auth.currentUser?.uid,
+                    auth.currentUser?.email,
+                    null,
+                    auth.currentUser?.displayName
+                )
                 db.collection("users").document(user.uid!!).set(user)
             }
         }
         return firebaseUser
     }
 
-    fun getFirebaseUser() : FirebaseUser? {
+    fun getFirebaseUser(): FirebaseUser? {
         return auth.currentUser
     }
-
-
 }

@@ -6,8 +6,9 @@ import com.example.zaribatodolist.data.repository.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
 
-public class AuthViewModel(
+class AuthViewModel(
     private val repository: AuthRepository) : ViewModel() {
+
     val userLiveData = MutableLiveData<FirebaseUser>()
 
     fun getFirebaseUser() : FirebaseUser?{
