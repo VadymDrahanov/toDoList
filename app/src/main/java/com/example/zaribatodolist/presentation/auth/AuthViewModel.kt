@@ -1,27 +1,34 @@
 package com.example.zaribatodolist.presentation.auth
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.data.repository.AuthRepository
+import com.example.zaribatodolist.data.repository.UserRepository
+import com.example.zaribatodolist.presentation.base.BaseViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AuthViewModel(
-    private val repository: AuthRepository) : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepos: AuthRepository,
+    private val userRepos: UserRepository
+) : BaseViewModel() {
 
-    val userLiveData = MutableLiveData<FirebaseUser>()
-
-    fun getFirebaseUser() : FirebaseUser?{
-        userLiveData.value = repository.getFirebaseUser()
-        return userLiveData.value
-    }
-
-    fun firebaseAuthWithGoogle(idToken: String) {
-        userLiveData.value = repository.firebaseAuthWithGoogle(idToken)
-    }
 
     fun getGoogleSignInGoogle(): GoogleSignInClient {
-        return repository.googleSignInClient
+        return authRepos.getGoogleSignInClient()
+    }
+
+    fun firebaseAuthWithGoogle(idToken: String): Boolean {
+        authRepos.firebaseAuthWithGoogle(idToken) { user, isNew ->
+            if (user != null) {
+                authState.value = "authenticated"
+                if (isNew == true) {
+                    userRepos.createUser(User(user.uid, user.email, null, user.displayName))
+                }
+            }
+        }
+        return true
     }
 
 }

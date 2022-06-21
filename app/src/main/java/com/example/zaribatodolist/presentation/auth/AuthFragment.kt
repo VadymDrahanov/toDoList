@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.zaribatodolist.MainActivity
 import com.example.zaribatodolist.databinding.FragmentAuthBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
-class AuthFragment : BaseFragment<AuthViewModel, FragmentAuthBinding>() {
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,31 +26,33 @@ class AuthFragment : BaseFragment<AuthViewModel, FragmentAuthBinding>() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = getFragmentBinding(inflater, container)
+        _binding = getFragmentBinding(inflater, container)
         val view = binding.root
 
-        viewModel.getFirebaseUser()
+        val stateObserver = Observer<String> { state ->
+            if (state == "authenticated") {
+                val intent = Intent(getActivity(), MainActivity::class.java)
+                getActivity()?.startActivity(intent)
+            }
+        }
 
-        val getAction =
+        viewModel.authState.observe(viewLifecycleOwner, stateObserver)
+
+        val signInAction =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(it?.data)
-
-                val account = task.getResult(ApiException::class.java)!!
-
-                if (viewModel.firebaseAuthWithGoogle(account.idToken!!) != null) {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    startActivity(intent)
+                if (task.isSuccessful) {
+                    val account = task.getResult(ApiException::class.java)!!
+                    viewModel.firebaseAuthWithGoogle(account.idToken!!)
                 }
             }
 
         binding.signInWithGoogleBtn.setOnClickListener {
-            getAction.launch(viewModel.getGoogleSignInGoogle().signInIntent)
+            signInAction.launch(viewModel.getGoogleSignInGoogle().signInIntent)
         }
 
         return view
     }
-
-    override fun getViewModel(): Class<AuthViewModel> = AuthViewModel::class.java
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

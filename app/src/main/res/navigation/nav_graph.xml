@@ -12,12 +12,12 @@
         tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/taskList"
-        android:name="com.example.zaribatodolist.presentation.takslist.TaskListFragment"
+        android:name="com.example.zaribatodolist.presentation.toDo.ToDoListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" />
     <fragment
         android:id="@+id/holderFragment"
-        android:name="com.example.zaribatodolist.presentation.fragmentHolder.HolderFragment"
+        android:name="com.example.zaribatodolist.presentation.list.TasksFragment"
         android:label="holder_fragment"
         tools:layout="@layout/holder_fragment" />
 </navigation>

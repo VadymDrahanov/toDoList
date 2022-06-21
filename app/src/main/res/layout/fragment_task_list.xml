@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_200"
-    tools:context=".presentation.takslist.TaskListFragment">
+    tools:context=".presentation.toDo.ToDoListFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
