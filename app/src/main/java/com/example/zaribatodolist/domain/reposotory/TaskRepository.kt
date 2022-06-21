@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.data.repository
+package com.example.zaribatodolist.domain.reposotory
 
 import com.example.zaribatodolist.data.model.Task
 

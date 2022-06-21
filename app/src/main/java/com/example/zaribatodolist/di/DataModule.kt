@@ -2,13 +2,14 @@ package com.example.zaribatodolist.di
 
 import android.content.Context
 import com.example.zaribatodolist.data.repository.*
+import com.example.zaribatodolist.domain.reposotory.AuthRepository
+import com.example.zaribatodolist.domain.reposotory.TaskRepository
+import com.example.zaribatodolist.domain.reposotory.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.annotation.Nullable
 import javax.inject.Singleton
 
 @Module

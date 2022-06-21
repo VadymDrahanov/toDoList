@@ -3,6 +3,7 @@ package com.example.zaribatodolist.data.repository
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.zaribatodolist.data.model.Task
+import com.example.zaribatodolist.domain.reposotory.TaskRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

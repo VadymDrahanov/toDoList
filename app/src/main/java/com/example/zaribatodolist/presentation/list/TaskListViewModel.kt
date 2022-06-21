@@ -3,10 +3,9 @@ package com.example.zaribatodolist.presentation.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zaribatodolist.data.model.Task
 import com.example.zaribatodolist.data.model.User
-import com.example.zaribatodolist.data.repository.AuthRepository
-import com.example.zaribatodolist.data.repository.TaskRepository
+import com.example.zaribatodolist.domain.reposotory.AuthRepository
+import com.example.zaribatodolist.domain.reposotory.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

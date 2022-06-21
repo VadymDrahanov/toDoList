@@ -1,8 +1,8 @@
 package com.example.zaribatodolist.presentation.auth
 
 import com.example.zaribatodolist.data.model.User
-import com.example.zaribatodolist.data.repository.AuthRepository
-import com.example.zaribatodolist.data.repository.UserRepository
+import com.example.zaribatodolist.domain.reposotory.AuthRepository
+import com.example.zaribatodolist.domain.reposotory.UserRepository
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel

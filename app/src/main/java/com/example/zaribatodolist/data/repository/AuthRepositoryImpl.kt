@@ -1,9 +1,8 @@
 package com.example.zaribatodolist.data.repository
 
 import android.content.Context
-import android.widget.Toast
 import com.example.zaribatodolist.R
-import com.example.zaribatodolist.data.model.User
+import com.example.zaribatodolist.domain.reposotory.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
