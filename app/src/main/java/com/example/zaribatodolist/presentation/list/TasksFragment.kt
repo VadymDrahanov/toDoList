@@ -25,9 +25,9 @@ class TasksFragment : BaseFragment<HolderFragmentBinding>() {
         _binding = getFragmentBinding(inflater, container)
         val view = binding.root
 
-        viewModel.getUser().observe(viewLifecycleOwner , Observer<User>{
-            binding.textView2.text = it.name
-        } )
+//        viewModel.getUser().observe(viewLifecycleOwner , Observer<User>{
+//            binding.textView2.text = it.name
+//        } )
 
         return view
     }

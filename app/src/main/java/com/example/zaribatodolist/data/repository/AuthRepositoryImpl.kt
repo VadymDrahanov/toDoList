@@ -2,7 +2,7 @@ package com.example.zaribatodolist.data.repository
 
 import android.content.Context
 import com.example.zaribatodolist.R
-import com.example.zaribatodolist.domain.reposotory.AuthRepository
+import com.example.zaribatodolist.domain.repository.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

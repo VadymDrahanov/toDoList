@@ -3,8 +3,8 @@ package com.example.zaribatodolist.presentation.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel<UiState: UIState> : ViewModel() {
 
-     lateinit var authState: MutableLiveData<String>
+    var uistate: MutableLiveData<UiState> = MutableLiveData()
 
 }

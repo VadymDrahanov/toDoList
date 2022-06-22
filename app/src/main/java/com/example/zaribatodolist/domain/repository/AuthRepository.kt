@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.domain.reposotory
+package com.example.zaribatodolist.domain.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.zaribatodolist.data.model.User

@@ -2,9 +2,9 @@ package com.example.zaribatodolist.di
 
 import android.content.Context
 import com.example.zaribatodolist.data.repository.*
-import com.example.zaribatodolist.domain.reposotory.AuthRepository
-import com.example.zaribatodolist.domain.reposotory.TaskRepository
-import com.example.zaribatodolist.domain.reposotory.UserRepository
+import com.example.zaribatodolist.domain.repository.AuthRepository
+import com.example.zaribatodolist.domain.repository.TaskRepository
+import com.example.zaribatodolist.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
