@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/holderFragment">
+    app:startDestination="@id/signOutFragment">
+
 
     <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="com.example.zaribatodolist.presentation.user.UserProfileFragment"
-        android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
-    <fragment
         android:id="@+id/taskList"
-        android:name="com.example.zaribatodolist.presentation.toDo.ToDoListFragment"
+        android:name="com.example.zaribatodolist.presentation.toDoList.ToDoListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" />
     <fragment
         android:id="@+id/holderFragment"
-        android:name="com.example.zaribatodolist.presentation.list.TasksFragment"
+        android:name="com.example.zaribatodolist.presentation.mainTaskList.TasksFragment"
         android:label="holder_fragment"
         tools:layout="@layout/holder_fragment" />
+    <fragment
+        android:id="@+id/signOutFragment"
+        android:name="com.example.zaribatodolist.presentation.signOut.SignOutFragment"
+        android:label="fragment_sign_out"
+        tools:layout="@layout/fragment_sign_out" />
 </navigation>

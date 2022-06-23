@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.presentation.toDo
+package com.example.zaribatodolist.presentation.toDoList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ToDoListFragment : Fragment() {
-
-
 
     private lateinit var viewModel: ToDoListViewModel
 

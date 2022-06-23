@@ -27,7 +27,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideUSerRepository(): UserRepository = UserRepositoryImpl()
+    fun provideUserRepository(): UserRepository = UserRepositoryImpl()
 
 
 }

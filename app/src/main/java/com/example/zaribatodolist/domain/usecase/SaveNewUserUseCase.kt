@@ -2,13 +2,13 @@ package com.example.zaribatodolist.domain.usecase
 
 import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository
-import com.google.firebase.auth.FirebaseUser
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 import javax.inject.Inject
 
 class SaveNewUserUseCase @Inject constructor(private val userRepository: UserRepository) {
-    fun execute(firebaseUser: FirebaseUser,  listener: () -> Unit) {
-        userRepository.createUser(User(firebaseUser.uid, firebaseUser.email, ArrayList(), firebaseUser.displayName)) {
-            listener.invoke()
-        }
+
+    suspend operator fun invoke(user: User) : Task<Void>? {
+        return userRepository.createUser(user)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.presentation.toDo
+package com.example.zaribatodolist.presentation.toDoList
 
 import android.view.LayoutInflater
 import android.view.View

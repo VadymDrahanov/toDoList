@@ -1,15 +1,17 @@
-package com.example.zaribatodolist.presentation.list
+package com.example.zaribatodolist.presentation.mainTaskList
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.example.zaribatodolist.data.model.User
-import com.example.zaribatodolist.databinding.FragmentTaskListBinding
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.zaribatodolist.databinding.HolderFragmentBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
+import com.example.zaribatodolist.presentation.completedList.ComletedTasksFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,9 +27,6 @@ class TasksFragment : BaseFragment<HolderFragmentBinding>() {
         _binding = getFragmentBinding(inflater, container)
         val view = binding.root
 
-//        viewModel.getUser().observe(viewLifecycleOwner , Observer<User>{
-//            binding.textView2.text = it.name
-//        } )
 
         return view
     }
@@ -36,5 +35,4 @@ class TasksFragment : BaseFragment<HolderFragmentBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): HolderFragmentBinding = HolderFragmentBinding.inflate(inflater, container, false)
-
 }

@@ -1,11 +1,16 @@
 package com.example.zaribatodolist.data.repository
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import com.example.zaribatodolist.R
+
 import com.example.zaribatodolist.domain.repository.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -34,16 +39,25 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
                     listener.invoke(user, isNewUser)
                 }
             } else {
-                auth.currentUser?.let { user ->
+                auth.currentUser?.let { _ ->
                     listener.invoke(null, false)
                 }
             }
         }
     }
 
-    override fun getGoogleSignInClient(): GoogleSignInClient {
-        val googleSignInClient = GoogleSignIn.getClient(context, gso)
-        return googleSignInClient
+    override suspend fun loginWithGoogle(accessToken: String): Task<AuthResult>? = try {
+        auth.signInWithCredential(
+            GoogleAuthProvider.getCredential(
+                accessToken, null
+            )
+        )
+    } catch (e: Throwable) {
+        Log.e("ERROR_SERVICE", e.toString())
+        null
     }
+
+
+    override fun getGoogleSignInClient() = GoogleSignIn.getClient(context, gso)
 
 }
