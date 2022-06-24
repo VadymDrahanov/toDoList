@@ -9,6 +9,7 @@ import javax.inject.Inject
 class SaveNewUserUseCase @Inject constructor(private val userRepository: UserRepository) {
 
     suspend operator fun invoke(user: User) : Task<Void>? {
+
         return userRepository.createUser(user)
     }
 }

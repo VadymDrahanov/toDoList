@@ -2,11 +2,7 @@ package com.example.zaribatodolist.di
 
 import com.example.zaribatodolist.domain.repository.AuthRepository
 import com.example.zaribatodolist.domain.repository.UserRepository
-import com.example.zaribatodolist.domain.usecase.GetGoogleSignInClientUseCase
-import com.example.zaribatodolist.domain.usecase.GetUserInfoUseCase
-import com.example.zaribatodolist.domain.usecase.LoginWithGoogleUseCase
-import com.example.zaribatodolist.domain.usecase.SaveNewUserUseCase
-import com.google.firebase.firestore.auth.User
+import com.example.zaribatodolist.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +29,15 @@ class DomainModule {
     @Provides
     fun provideGetUserInfoUseCase(userRepository: UserRepository): GetUserInfoUseCase {
         return GetUserInfoUseCase(userRepository = userRepository)
+    }
+
+    @Provides
+    fun provideSignOutUseCase(authRepository: AuthRepository): SignOutUseCase {
+        return SignOutUseCase(authRepository = authRepository)
+    }
+
+    @Provides
+    fun provideGetUserFromStorage(userRepository: UserRepository): GetUserInfoFromStorage {
+        return GetUserInfoFromStorage(userRepository = userRepository)
     }
 }

@@ -26,25 +26,8 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
         .requestEmail()
         .build()
 
-    override fun firebaseAuthWithGoogle(
-        idToken: String,
-        listener: (FirebaseUser?, Boolean) -> Unit
-    ) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
 
-        auth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                auth.currentUser?.let { user ->
-                    val isNewUser = it.getResult().additionalUserInfo?.isNewUser ?: true
-                    listener.invoke(user, isNewUser)
-                }
-            } else {
-                auth.currentUser?.let { _ ->
-                    listener.invoke(null, false)
-                }
-            }
-        }
-    }
+
 
     override suspend fun loginWithGoogle(accessToken: String): Task<AuthResult>? = try {
         auth.signInWithCredential(
@@ -59,5 +42,9 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
 
 
     override fun getGoogleSignInClient() = GoogleSignIn.getClient(context, gso)
+
+    override fun signOut() {
+        Firebase.auth.signOut()
+    }
 
 }

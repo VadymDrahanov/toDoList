@@ -7,7 +7,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 
 interface UserRepository {
-    suspend fun getUser(id: String): Task<DocumentSnapshot>?
+    suspend fun sendGetUserRequest(id: String): Task<DocumentSnapshot>?
+    var currentUser: User?
     fun updateUser(user: User)
     suspend fun createUser(user: User): Task<Void>?
 }

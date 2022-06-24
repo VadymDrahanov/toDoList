@@ -29,5 +29,4 @@ class DataModule {
     @Singleton
     fun provideUserRepository(): UserRepository = UserRepositoryImpl()
 
-
 }

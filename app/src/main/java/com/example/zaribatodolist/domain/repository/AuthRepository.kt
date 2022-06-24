@@ -8,7 +8,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.AuthResult
 
 interface AuthRepository {
-    fun firebaseAuthWithGoogle(idToken: String, listener: (FirebaseUser?, Boolean) -> Unit)
     suspend fun loginWithGoogle(accessToken: String): Task<AuthResult>?
     fun getGoogleSignInClient() : GoogleSignInClient
+    fun signOut()
+    fun userSign_ins() : Boolean
 }
