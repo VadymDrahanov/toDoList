@@ -13,12 +13,15 @@ import com.example.zaribatodolist.databinding.FragmentAuthBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private val viewModel: AuthViewModel by viewModels()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,8 +61,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             }
 
         binding.signInWithGoogleBtn.setOnClickListener {
-            signInAction.launch(viewModel.getGoogleSignIn().signInIntent)
-        }
+            if(auth.currentUser != null){
+                viewModel.getUserInfo(auth.currentUser!!.uid)
+            }else{
+                signInAction.launch(viewModel.getGoogleSignIn().signInIntent)
+            }
+            }
         /////////////////////////////////////////////////////////////////////////////////////////////
 
         return view

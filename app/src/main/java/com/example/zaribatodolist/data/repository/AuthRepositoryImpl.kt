@@ -47,4 +47,10 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
         Firebase.auth.signOut()
     }
 
+    override fun getSignInStatus(): Boolean {
+        if(auth.currentUser != null){
+            return true
+        }else return false
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.example.zaribatodolist.presentation.auth
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.zaribatodolist.data.model.User
@@ -25,7 +24,6 @@ class AuthViewModel @Inject constructor(
     BaseViewModel<AuthUIState>() {
 
     fun getGoogleSignIn(): GoogleSignInClient {
-
         return getGoogleSignInClient.invoke()
     }
 
@@ -42,19 +40,7 @@ class AuthViewModel @Inject constructor(
                                     saveNewUser(it)
                                 }
                             } else {
-                                viewModelScope.launch {
-                                    getUserInfoUseCase(it.getResult().user!!.uid)!!.addOnCompleteListener { getUser ->
-                                        when {
-                                            getUser.isSuccessful -> {
-                                                uistate.value = AuthUIState(false, true)
-                                            }
-                                            getUser.isCanceled -> {
-                                                uistate.value = AuthUIState(false, false)
-                                                Log.i("Error", "Something went wrong")
-                                            }
-                                        }
-                                    }
-                                }
+                                getUserInfo(it.getResult().user!!.uid)
                             }
                         }
                         it.isCanceled -> {
@@ -99,6 +85,24 @@ class AuthViewModel @Inject constructor(
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
                 handleError()
+            }
+        }
+    }
+
+    fun getUserInfo(uid: String){
+        uistate.value = AuthUIState(true, false)
+
+        viewModelScope.launch {
+            getUserInfoUseCase(uid)!!.addOnCompleteListener { getUser ->
+                when {
+                    getUser.isSuccessful -> {
+                        uistate.value = AuthUIState(false, true)
+                    }
+                    getUser.isCanceled -> {
+                        uistate.value = AuthUIState(false, false)
+                        Log.i("Error", "Something went wrong")
+                    }
+                }
             }
         }
     }

@@ -11,5 +11,5 @@ interface AuthRepository {
     suspend fun loginWithGoogle(accessToken: String): Task<AuthResult>?
     fun getGoogleSignInClient() : GoogleSignInClient
     fun signOut()
-    fun userSign_ins() : Boolean
+    fun getSignInStatus() : Boolean
 }
