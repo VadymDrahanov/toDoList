@@ -5,18 +5,22 @@
       <map>
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/circle_shape.xml" value="0.195" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/custom_checkbox.xml" value="0.195" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/ic_user.xml" value="0.194" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/star_checked.xml" value="0.196" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/drawable/star_unchecked.xml" value="0.196" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/activity_auth.xml" value="0.18" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_auth.xml" value="0.22" />
-        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_comleted_tasks.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_comleted_tasks.xml" value="0.2" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_frament_holder.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_sign_out.xml" value="0.25" />
-        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_task_list.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_task_list.xml" value="0.18" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_todo_tasks.xml" value="0.2890625" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/fragment_user_profile.xml" value="0.2" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/holder_fragment.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/item_task.xml" value="0.33" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/layout/main_fragment.xml" value="0.19" />
+        <entry key="..\:/Users/Vadym Drahanov/AndroidStudioProjects/ZaribaToDoList/app/src/main/res/menu/toolbar_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

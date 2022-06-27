@@ -60,6 +60,10 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 }
             }
 
+        if(auth.currentUser != null) {
+            viewModel.getUserInfo(auth.currentUser!!.uid)
+        }
+
         binding.signInWithGoogleBtn.setOnClickListener {
             if(auth.currentUser != null){
                 viewModel.getUserInfo(auth.currentUser!!.uid)

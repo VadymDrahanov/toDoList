@@ -3,22 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signOutFragment">
+    app:startDestination="@id/holderFragment">
 
 
     <fragment
         android:id="@+id/taskList"
         android:name="com.example.zaribatodolist.presentation.toDoList.ToDoListFragment"
         android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list" />
+        tools:layout="@layout/fragment_todo_tasks" />
+
     <fragment
         android:id="@+id/holderFragment"
-        android:name="com.example.zaribatodolist.presentation.mainTaskList.TasksFragment"
-        android:label="holder_fragment"
-        tools:layout="@layout/holder_fragment" />
+        android:name="com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragment"
+        android:label="Task List"
+        tools:layout="@layout/main_fragment" />
     <fragment
         android:id="@+id/signOutFragment"
         android:name="com.example.zaribatodolist.presentation.signOut.SignOutFragment"
         android:label="fragment_sign_out"
         tools:layout="@layout/fragment_sign_out" />
+
+
 </navigation>

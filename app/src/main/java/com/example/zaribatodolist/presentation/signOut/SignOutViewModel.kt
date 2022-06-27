@@ -1,20 +1,15 @@
 package com.example.zaribatodolist.presentation.signOut
 
-import android.content.ContentValues.TAG
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.example.zaribatodolist.data.model.Task
+
 import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.usecase.GetUserInfoFromStorage
 import com.example.zaribatodolist.domain.usecase.GetUserInfoUseCase
 import com.example.zaribatodolist.domain.usecase.SignOutUseCase
-import com.example.zaribatodolist.presentation.auth.AuthUIState
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
