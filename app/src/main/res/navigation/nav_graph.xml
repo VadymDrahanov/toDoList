@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/taskList"
-        android:name="com.example.zaribatodolist.presentation.toDoList.ToDoListFragment"
+        android:name="com.example.zaribatodolist.presentation.toDoList.ToDoTasksFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_todo_tasks" />
 
@@ -16,7 +16,7 @@
         android:id="@+id/holderFragment"
         android:name="com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragment"
         android:label="Task List"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/fragment_tasks_main" />
     <fragment
         android:id="@+id/signOutFragment"
         android:name="com.example.zaribatodolist.presentation.signOut.SignOutFragment"

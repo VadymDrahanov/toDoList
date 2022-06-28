@@ -31,34 +31,6 @@ class SignOutViewModel @Inject constructor(
             _successGetUserInfo.postValue(getUserInfoFromStorage.invoke())
             uistate.value = SignOutUIState(false, false)
         }
-
-//        viewModelScope.launch {
-//            try {
-//                getUserInfoUseCase.invoke(uid = uid)?.addOnCompleteListener {
-//                    when {
-//                        it.isSuccessful -> {
-//                            it.addOnSuccessListener { documentSnapshot ->
-//                                uistate.value = SignOutUIState(false, false)
-//
-//                                val user = User(
-//                                    uid = documentSnapshot.get("uid").toString(),
-//                                    name = documentSnapshot.get("name").toString(),
-//                                    tasks = documentSnapshot.get("tasks") as ArrayList<Task>,
-//                                    email = documentSnapshot.get("email").toString(),
-//                                    newUser = documentSnapshot.get("newUser") as Boolean,
-//                                    photoUrl = Uri.parse(
-//                                        (documentSnapshot.get("photoUrl").toString())
-//                                    )
-//                                )
-//                                _successGetUserInfo.postValue(user)
-//                            }
-//                        }
-//                    }
-//                }
-//            } catch (e: java.lang.Exception) {
-//                e.printStackTrace()
-//            }
-//        }
     }
 
     fun signOut() {

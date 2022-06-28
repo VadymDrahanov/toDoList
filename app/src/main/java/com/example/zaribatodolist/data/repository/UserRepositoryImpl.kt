@@ -1,8 +1,8 @@
 package com.example.zaribatodolist.data.repository
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.google.android.gms.tasks.Task
@@ -20,7 +20,7 @@ class UserRepositoryImpl() : UserRepository {
             val user = User(
                 uid = documentSnapshot.get("uid").toString(),
                 name = documentSnapshot.get("name").toString(),
-                tasks = documentSnapshot.get("tasks") as ArrayList<com.example.zaribatodolist.data.model.Task>,
+                tasks = documentSnapshot.get("tasks") as ArrayList<TaskModel>,
                 email = documentSnapshot.get("email").toString(),
                 newUser = documentSnapshot.get("newUser") as Boolean,
                 photoUrl = Uri.parse((documentSnapshot.get("photoUrl").toString()))
@@ -34,7 +34,7 @@ class UserRepositoryImpl() : UserRepository {
         return try {
             doc.get()
         } catch (e: Throwable) {
-            Log.e("ERROR_SERVICE", e.toString())
+            Log.e("ERROR_rSERVICE", e.toString())
             null
         }
     }

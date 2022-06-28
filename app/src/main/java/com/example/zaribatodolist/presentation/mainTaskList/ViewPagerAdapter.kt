@@ -2,10 +2,9 @@ package com.example.zaribatodolist.presentation.mainTaskList
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.zaribatodolist.presentation.completedList.ComletedTasksFragment
-import com.example.zaribatodolist.presentation.toDoList.ToDoListFragment
+import com.example.zaribatodolist.presentation.toDoList.ToDoTasksFragment
 
 class ViewPagerAdapter(activity: AppCompatActivity) :
     FragmentStateAdapter(activity) {
@@ -16,7 +15,7 @@ class ViewPagerAdapter(activity: AppCompatActivity) :
 
     override fun createFragment(position: Int): Fragment {
         when(position){
-            0 -> return ToDoListFragment()
+            0 -> return ToDoTasksFragment()
             else -> return ComletedTasksFragment()
         }
     }

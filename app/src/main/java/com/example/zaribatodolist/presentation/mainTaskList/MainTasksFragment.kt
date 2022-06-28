@@ -7,18 +7,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 
-import com.example.zaribatodolist.databinding.MainFragmentBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.zaribatodolist.presentation.completedList.ComletedTasksFragment
-import com.example.zaribatodolist.presentation.toDoList.ToDoListFragment
+import com.example.zaribatodolist.databinding.FragmentTasksMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 @AndroidEntryPoint
-class MainTasksFragment : BaseFragment<MainFragmentBinding>() {
+class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
 
     private val viewModel : TaskListViewModel by viewModels()
     private lateinit var mPager: ViewPager2
@@ -47,5 +44,5 @@ class MainTasksFragment : BaseFragment<MainFragmentBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): MainFragmentBinding = MainFragmentBinding.inflate(inflater, container, false)
+    ): FragmentTasksMainBinding = FragmentTasksMainBinding.inflate(inflater, container, false)
 }

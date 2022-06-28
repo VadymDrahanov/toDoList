@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_200"
-    tools:context=".presentation.toDoList.ToDoListFragment">
+    tools:context=".presentation.toDoList.ToDoTasksFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,7 +23,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/button2"
+        android:id="@+id/addBtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"

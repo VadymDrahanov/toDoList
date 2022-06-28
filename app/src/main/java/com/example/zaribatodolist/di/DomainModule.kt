@@ -1,6 +1,7 @@
 package com.example.zaribatodolist.di
 
 import com.example.zaribatodolist.domain.repository.AuthRepository
+import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.example.zaribatodolist.domain.usecase.*
 import dagger.Module
@@ -39,5 +40,15 @@ class DomainModule {
     @Provides
     fun provideGetUserFromStorage(userRepository: UserRepository): GetUserInfoFromStorage {
         return GetUserInfoFromStorage(userRepository = userRepository)
+    }
+
+    @Provides
+    fun provideAddNewTaskUseCase(taskRepository: TaskRepository): AddNewTaskUseCase {
+        return AddNewTaskUseCase(taskRepository = taskRepository)
+    }
+
+    @Provides
+    fun provideGetUserTasksRepository(taskRepository: TaskRepository): GetUserTasksUseCase {
+        return GetUserTasksUseCase(taskRepository = taskRepository)
     }
 }

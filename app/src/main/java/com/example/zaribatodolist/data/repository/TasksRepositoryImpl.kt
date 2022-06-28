@@ -1,30 +1,36 @@
 package com.example.zaribatodolist.data.repository
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.zaribatodolist.data.model.Task
+import com.example.zaribatodolist.data.model.TaskModel
+import com.google.android.gms.tasks.Task
+
 import com.example.zaribatodolist.domain.repository.TaskRepository
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
 class TasksRepositoryImpl : TaskRepository {
-
     private var db = Firebase.firestore
+    override var userTasks: ArrayList<TaskModel>
+        get() = TODO("Not yet implemented")
+        set(value) {}
 
-    override fun addTask(task: Task, userUid: String): Boolean {
-        db.collection("tasks").add(task).addOnSuccessListener { documentReference ->
-            Log.w(TAG,"DocumentSnapshot added with ID:${documentReference.id}")
-        }
-        return true
+
+
+    override suspend fun addTask(task: TaskModel): Task<DocumentReference> {
+        return db.collection("tasks").add(task)
     }
 
     override fun removeTask() {
         TODO("Not yet implemented")
     }
 
-    override fun getAllTasks(): ArrayList<Task> {
-        var result : ArrayList<Task> = emptyList<Task>() as ArrayList<Task>
+    override fun getAllTasks(): ArrayList<TaskModel> {
+        var result : ArrayList<TaskModel> = emptyList<TaskModel>() as ArrayList<TaskModel>
         db.collection("tasks").get()
             .addOnSuccessListener { queryDocumentSnapshots ->
                 // after getting the data we are calling on success method
@@ -38,7 +44,7 @@ class TasksRepositoryImpl : TaskRepository {
                     for (d in list) {
                         // after getting this list we are passing
                         // that list to our object class.
-                        val c: Task? = d.toObject(Task::class.java)
+                        val c: TaskModel? = d.toObject(TaskModel::class.java)
 
                         // and we will pass this object class
                         // inside our arraylist which we have
@@ -61,5 +67,12 @@ class TasksRepositoryImpl : TaskRepository {
 
     override fun updateTask() {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getTasks(uid: String) : Task<QuerySnapshot>{
+        val res = db.collection("tasks")
+            .whereEqualTo("user_id", uid).get()
+
+        return res
     }
 }
