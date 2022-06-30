@@ -31,7 +31,6 @@ class SignOutFragment : BaseFragment<FragmentSignOutBinding>() {
         val view = binding.root
         viewModel.getUserInfo(FirebaseAuth.getInstance().currentUser!!.uid)
 
-
         viewModel.successGetUserInfo.observe(viewLifecycleOwner, {
             Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
             it?.let {

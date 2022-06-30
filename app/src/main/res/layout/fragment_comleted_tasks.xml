@@ -5,16 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_light"
-    tools:context=".presentation.completedList.ComletedTasksFragment">
+    tools:context=".presentation.completedList.CompletedTasksFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Completed Tasks List"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasksRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

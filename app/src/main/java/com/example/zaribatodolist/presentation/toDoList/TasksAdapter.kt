@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zaribatodolist.R
+import com.example.zaribatodolist.data.model.TaskModel
 
 
-class TasksAdapter(private val dataSet: ArrayList<String>) :
+class TasksAdapter(private val dataSet: ArrayList<TaskModel>) :
     RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
 
     /**

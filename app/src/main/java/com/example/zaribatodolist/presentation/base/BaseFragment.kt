@@ -11,6 +11,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected var _binding: B? = null
     protected val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

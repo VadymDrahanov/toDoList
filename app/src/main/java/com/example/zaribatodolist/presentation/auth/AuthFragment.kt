@@ -42,7 +42,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                     activity?.startActivity(intent)
                 }
             }
-            if(state.isLoading){
+            if (state.isLoading) {
                 binding.progressBar.visibility = View.VISIBLE
             }
         }
@@ -60,17 +60,17 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 }
             }
 
-        if(auth.currentUser != null) {
-            viewModel.getUserInfo(auth.currentUser!!.uid)
-        }
+//        if (auth.currentUser != null) {
+//            viewModel.getUserInfo(auth.currentUser!!.uid)
+//        }
 
         binding.signInWithGoogleBtn.setOnClickListener {
-            if(auth.currentUser != null){
+            if (auth.currentUser != null) {
                 viewModel.getUserInfo(auth.currentUser!!.uid)
-            }else{
+            } else {
                 signInAction.launch(viewModel.getGoogleSignIn().signInIntent)
             }
-            }
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////
 
         return view

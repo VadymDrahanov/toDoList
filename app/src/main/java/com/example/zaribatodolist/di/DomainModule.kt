@@ -48,7 +48,17 @@ class DomainModule {
     }
 
     @Provides
-    fun provideGetUserTasksRepository(taskRepository: TaskRepository): GetUserTasksUseCase {
+    fun provideGetUserTasksUseCase(taskRepository: TaskRepository): GetUserTasksUseCase {
         return GetUserTasksUseCase(taskRepository = taskRepository)
+    }
+
+    @Provides
+    fun provideGetUserTasksFromStorageUseCase(taskRepository: TaskRepository): GetTasksFromStorage {
+        return GetTasksFromStorage(tasksRepo = taskRepository)
+    }
+
+    @Provides
+    fun provideTasksObserverUseCase(taskRepository: TaskRepository): TasksObserverUseCase {
+        return TasksObserverUseCase(repo = taskRepository)
     }
 }

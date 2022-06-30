@@ -20,9 +20,9 @@ class UserRepositoryImpl() : UserRepository {
             val user = User(
                 uid = documentSnapshot.get("uid").toString(),
                 name = documentSnapshot.get("name").toString(),
-                tasks = documentSnapshot.get("tasks") as ArrayList<TaskModel>,
+                //tasks = documentSnapshot.get("tasks") as ArrayList<TaskModel>,
                 email = documentSnapshot.get("email").toString(),
-                newUser = documentSnapshot.get("newUser") as Boolean,
+//                newUser = documentSnapshot.get("newUser") as Boolean,
                 photoUrl = Uri.parse((documentSnapshot.get("photoUrl").toString()))
             )
 
