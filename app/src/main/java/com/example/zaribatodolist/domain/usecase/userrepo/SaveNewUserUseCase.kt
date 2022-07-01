@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.domain.usecase
+package com.example.zaribatodolist.domain.usecase.userrepo
 
 import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository

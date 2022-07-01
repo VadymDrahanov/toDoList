@@ -2,6 +2,7 @@ package com.example.zaribatodolist.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.data.model.TaskModel
 import com.google.android.gms.tasks.Task
 
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.collections.ArrayList
 
 
 class TasksRepositoryImpl : TaskRepository {
@@ -18,11 +20,18 @@ class TasksRepositoryImpl : TaskRepository {
     var userTasks: ArrayList<TaskModel> = ArrayList()
     override val tasksLiveData: MutableLiveData<ArrayList<TaskModel>> = MutableLiveData()
 
-    override suspend fun addTask(task: TaskModel): Task<DocumentReference> {
+    override suspend fun addTask(task: SaveTaskParam): Task<DocumentReference> {
         return db.collection("tasks").add(task).addOnCompleteListener {
             when {
                 it.isSuccessful -> {
-                    userTasks.add(task)
+                    userTasks.add(
+                        TaskModel(
+                            title = task.title,
+                            uid = it.getResult().id,
+                            isCompleted = false,
+                            user_id = task.user_id
+                        )
+                    )
                     tasksLiveData.value = userTasks
                 }
             }
@@ -34,11 +43,39 @@ class TasksRepositoryImpl : TaskRepository {
         TODO("Not yet implemented")
     }
 
-    override fun updateTask() {
-        TODO("Not yet implemented")
+    fun taskCompleted(taskID: String) {
+
+    }
+
+
+    override fun updateTaskCompletion(id: String) {
+        val ref = db.collection("tasks").document(id)
+        var tempToAdd: TaskModel? = null
+        var tempToRemove: TaskModel? = null
+
+        ref.update("completed", true)
+            .addOnSuccessListener {
+                for (task in userTasks) {
+                    if (task.uid == id) {
+                        tempToRemove = task
+                        tempToAdd = task.copy(isCompleted = true)
+                    }
+                }
+
+                if (tempToAdd != null)
+                    userTasks.add(tempToAdd!!)
+
+                if (tempToRemove != null)
+                    userTasks.remove(tempToRemove!!)
+
+                tasksLiveData.value = userTasks
+            }
     }
 
     override suspend fun getTasks(uid: String): Task<QuerySnapshot> {
+
+        userTasks.clear()
+        tasksLiveData.value?.clear()
 
         Log.i("----------------------------------------------------------------", "Query Called")
         val res = db.collection("tasks").whereEqualTo("user_id", uid).get()
@@ -47,9 +84,11 @@ class TasksRepositoryImpl : TaskRepository {
             for (i in 0..it.getResult().documents.size - 1) {
                 val doc = res.getResult().documents.get(i).data
                 val model = TaskModel(
-                    doc!!.get("title").toString(),
-                    doc!!.get("completed") as Boolean,
-                    doc!!.get("user_id").toString()
+                    title = doc!!.get("title").toString(),
+                    isCompleted = doc.get("completed") as Boolean,
+                    user_id = doc.get("user_id").toString(),
+                    note = doc.get("note").toString(),
+                    uid = res.getResult().documents.get(i).id
                 )
                 userTasks.add(model)
             }

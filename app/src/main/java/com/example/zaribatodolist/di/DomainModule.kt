@@ -3,7 +3,13 @@ package com.example.zaribatodolist.di
 import com.example.zaribatodolist.domain.repository.AuthRepository
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.example.zaribatodolist.domain.repository.UserRepository
-import com.example.zaribatodolist.domain.usecase.*
+import com.example.zaribatodolist.domain.usecase.authrepo.GetGoogleSignInClientUseCase
+import com.example.zaribatodolist.domain.usecase.authrepo.LoginWithGoogleUseCase
+import com.example.zaribatodolist.domain.usecase.authrepo.SignOutUseCase
+import com.example.zaribatodolist.domain.usecase.taskrepo.*
+import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoFromStorage
+import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.SaveNewUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,7 +64,12 @@ class DomainModule {
     }
 
     @Provides
-    fun provideTasksObserverUseCase(taskRepository: TaskRepository): TasksObserverUseCase {
-        return TasksObserverUseCase(repo = taskRepository)
+    fun provideTasksObserverUseCase(taskRepository: TaskRepository): ObservTasksUseCase {
+        return ObservTasksUseCase(repo = taskRepository)
+    }
+
+    @Provides
+    fun provideUpdateTaskCompletionUseCase(taskRepository: TaskRepository): UpdateTaskCompletionUseCase {
+        return UpdateTaskCompletionUseCase(taskRepository = taskRepository)
     }
 }

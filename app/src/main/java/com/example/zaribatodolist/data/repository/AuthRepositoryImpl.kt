@@ -27,8 +27,6 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
         .build()
 
 
-
-
     override suspend fun loginWithGoogle(accessToken: String): Task<AuthResult>? = try {
         auth.signInWithCredential(
             GoogleAuthProvider.getCredential(

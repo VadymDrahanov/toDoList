@@ -1,4 +1,4 @@
-package com.example.zaribatodolist.domain.usecase
+package com.example.zaribatodolist.domain.usecase.userrepo
 
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.google.android.gms.tasks.Task

@@ -2,7 +2,6 @@ package com.example.zaribatodolist.data.repository
 
 import android.net.Uri
 import android.util.Log
-import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.google.android.gms.tasks.Task

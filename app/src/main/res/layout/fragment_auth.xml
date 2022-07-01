@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".presentation.auth.AuthFragment">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/abel"
+        android:text="Yo What`s Up"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/logoIV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
     <Button
         android:id="@+id/signInWithGoogleBtn"
         style="@style/MaterialAlertDialog.Material3"
@@ -25,39 +39,26 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="151dp"
-        android:layout_height="109dp"
-        android:layout_marginTop="156dp"
+        android:id="@+id/logoIV"
+        android:layout_width="159dp"
+        android:layout_height="159dp"
+        android:layout_marginTop="328dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/zariba_logo" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/acme"
-        android:text="Welcome!"
-        android:textColor="@color/black"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/signInWithGoogleBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:srcCompat="@drawable/checklist_ic" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="388dp"
+        android:layout_height="388dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/logoIV"
+        app:layout_constraintEnd_toEndOf="@+id/logoIV"
+        app:layout_constraintStart_toStartOf="@+id/logoIV"
+        app:layout_constraintTop_toTopOf="@+id/logoIV"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading" />
+        app:lottie_rawRes="@raw/load" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

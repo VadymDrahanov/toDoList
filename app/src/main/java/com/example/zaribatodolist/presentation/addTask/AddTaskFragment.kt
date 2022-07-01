@@ -12,9 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import com.example.zaribatodolist.R
-import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentAddTaskBinding
-import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +71,8 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                             )
                         )
                     );
+
+                    binding.addTaskFAB.isEnabled = true
                 } else {
                     binding.addTaskFAB.setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -81,6 +81,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                             )
                         )
                     );
+                    binding.addTaskFAB.isEnabled = false
                 }
             }
         })

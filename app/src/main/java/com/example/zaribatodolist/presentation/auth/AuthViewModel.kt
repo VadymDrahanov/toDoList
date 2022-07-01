@@ -2,7 +2,11 @@ package com.example.zaribatodolist.presentation.auth
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.zaribatodolist.domain.usecase.*
+import com.example.zaribatodolist.domain.usecase.authrepo.GetGoogleSignInClientUseCase
+import com.example.zaribatodolist.domain.usecase.authrepo.LoginWithGoogleUseCase
+import com.example.zaribatodolist.domain.usecase.taskrepo.GetUserTasksUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.SaveNewUserUseCase
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel

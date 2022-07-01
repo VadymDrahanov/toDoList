@@ -1,13 +1,12 @@
 package com.example.zaribatodolist.presentation.signOut
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.zaribatodolist.data.model.TaskModel
 
-import com.example.zaribatodolist.data.model.User
-import com.example.zaribatodolist.domain.usecase.GetUserInfoFromStorage
-import com.example.zaribatodolist.domain.usecase.GetUserInfoUseCase
-import com.example.zaribatodolist.domain.usecase.SignOutUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoFromStorage
+import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
+import com.example.zaribatodolist.domain.usecase.authrepo.SignOutUseCase
+import com.example.zaribatodolist.domain.usecase.taskrepo.ObservTasksUseCase
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,22 +15,23 @@ import javax.inject.Inject
 class SignOutViewModel @Inject constructor(
     private val getUserInfoUseCase: GetUserInfoUseCase,
     private val signOutUseCase: SignOutUseCase,
-    private val getUserInfoFromStorage: GetUserInfoFromStorage
+    private val getUserInfoFromStorage: GetUserInfoFromStorage,
+    tasksObserverUseCase: ObservTasksUseCase
+
 ) : BaseViewModel<SignOutUIState>() {
 
-    private val _successGetUserInfo = MutableLiveData<User?>()
-    val successGetUserInfo = _successGetUserInfo as LiveData<User?>
+    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasks
 
-    fun getUserInfo(uid: String) {
-        uistate.value = SignOutUIState(true, false)
-        if(getUserInfoFromStorage.invoke() == null){
-            Log.i("Error", "Some problem with user")
-            signOut()
-        }else{
-            _successGetUserInfo.postValue(getUserInfoFromStorage.invoke())
-            uistate.value = SignOutUIState(false, false)
-        }
-    }
+//    fun getUserInfo(uid: String) {
+//        //uistate.value = SignOutUIState(true, false)
+//        if(getUserInfoFromStorage.invoke() == null){
+//            Log.i("Error", "Some problem with user")
+//            signOut()
+//        }else{
+//            _successGetUserInfo.postValue(getUserInfoFromStorage.invoke())
+//            uistate.value = SignOutUIState(false, false)
+//        }
+//    }
 
     fun signOut() {
         signOutUseCase.invoke()

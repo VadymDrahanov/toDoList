@@ -1,11 +1,8 @@
-package com.example.zaribatodolist.domain.usecase
+package com.example.zaribatodolist.domain.usecase.taskrepo
 
-import android.util.Log
-import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class GetUserTasksUseCase @Inject constructor(private val taskRepository: TaskRepository) {

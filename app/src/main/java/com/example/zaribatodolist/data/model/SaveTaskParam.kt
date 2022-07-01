@@ -1,14 +1,8 @@
 package com.example.zaribatodolist.data.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-data class TaskModel(
+data class SaveTaskParam(
     val title: String,
     val isCompleted: Boolean,
     val user_id: String,
-    val uid: String,
     val note: String = ""
-) :
-    Parcelable
+)

@@ -36,14 +36,15 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         val stateObserver = Observer<AuthUIState> { state ->
             if (!state.isLoading) {
                 if (state.isAthenticated) {
-                    binding.progressBar.visibility = View.GONE
-
                     val intent = Intent(activity, MainActivity::class.java)
                     activity?.startActivity(intent)
+
                 }
             }
             if (state.isLoading) {
                 binding.progressBar.visibility = View.VISIBLE
+                binding.logoIV.visibility = View.INVISIBLE
+                binding.signInWithGoogleBtn.isClickable = false
             }
         }
         viewModel.uistate.observe(viewLifecycleOwner, stateObserver)
