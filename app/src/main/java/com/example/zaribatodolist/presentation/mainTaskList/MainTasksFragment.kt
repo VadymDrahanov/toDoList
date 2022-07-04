@@ -47,7 +47,6 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         }.attach()
 
         binding.toolbar.inflateMenu(R.menu.toolbar_menu)
-        binding.toolbar.title = "Task List"
 
         binding.toolbar.setOnMenuItemClickListener{
             if(it.itemId == R.id.goToSignOutButton){
@@ -61,14 +60,6 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Tag", "Here")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

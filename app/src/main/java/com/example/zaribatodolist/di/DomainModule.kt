@@ -72,4 +72,14 @@ class DomainModule {
     fun provideUpdateTaskCompletionUseCase(taskRepository: TaskRepository): UpdateTaskCompletionUseCase {
         return UpdateTaskCompletionUseCase(taskRepository = taskRepository)
     }
+
+    @Provides
+    fun provideUpdateTaskNoteUseCase(taskRepository: TaskRepository): UpdateTaskNoteUseCase {
+        return UpdateTaskNoteUseCase(repo = taskRepository)
+    }
+
+    @Provides
+    fun provideTasksFilterUseCase(taskRepository: TaskRepository): ObservAndFilterTasksUseCase {
+        return ObservAndFilterTasksUseCase(repo = taskRepository)
+    }
 }

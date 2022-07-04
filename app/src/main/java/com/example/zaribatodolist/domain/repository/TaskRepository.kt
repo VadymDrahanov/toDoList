@@ -11,10 +11,11 @@ interface TaskRepository {
 
     val tasksLiveData: MutableLiveData<ArrayList<TaskModel>>
 
-    suspend fun addTask(task: SaveTaskParam) : Task<DocumentReference>
-    suspend fun getTasks(uid: String) : Task<QuerySnapshot>
-    fun getTasksFromStorage() : ArrayList<TaskModel>
+    suspend fun addTask(task: SaveTaskParam): Task<DocumentReference>
+    suspend fun getTasks(uid: String): Task<QuerySnapshot>
+    fun getTasksFromStorage(): ArrayList<TaskModel>
 
     fun removeTask()
     fun updateTaskCompletion(id: String)
+    fun updateTaskNote(id: String, newNote: String)
 }

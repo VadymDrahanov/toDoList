@@ -40,15 +40,40 @@ class TasksRepositoryImpl : TaskRepository {
     }
 
     override fun removeTask() {
-        TODO("Not yet implemented")
+
     }
 
-    fun taskCompleted(taskID: String) {
+    override fun updateTaskNote(id: String, newNote: String) {
+        Log.i("----------------------------------------------------------------", id)
 
+        val ref = db.collection("tasks").document(id)
+        var tempToAdd: TaskModel? = null
+        var tempToRemove: TaskModel? = null
+
+        ref.update("note", newNote)
+            .addOnSuccessListener {
+                for (task in userTasks) {
+                    if (task.uid == id) {
+                        tempToRemove = task
+                        tempToAdd = task.copy(note = newNote)
+                    }
+                }
+
+                if (tempToAdd != null) {
+                    userTasks.add(tempToAdd!!)
+                }
+
+                if (tempToRemove != null) {
+                    userTasks.remove(tempToRemove!!)
+                }
+
+                tasksLiveData.value = userTasks
+            }
     }
 
 
     override fun updateTaskCompletion(id: String) {
+
         val ref = db.collection("tasks").document(id)
         var tempToAdd: TaskModel? = null
         var tempToRemove: TaskModel? = null

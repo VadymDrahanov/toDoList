@@ -63,7 +63,7 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         //viewModel.handleCheckBoxClick(id)
         //Navigation.findNavController(myView).navigate(R.id.action_mainFragment_to_taskDetailsFragment);
         Navigation.findNavController(myView)
-            .navigate(MainTasksFragmentDirections.actionMainFragmentToTaskDetailsFragment(task))
+            .navigate(MainTasksFragmentDirections.mainToDetail(task))
     }
 
     override fun getFragmentBinding(

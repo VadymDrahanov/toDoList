@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/navigationMenuFragment">
 
 
     <fragment
@@ -13,7 +13,11 @@
         tools:layout="@layout/fragment_todo_tasks" >
         <action
             android:id="@+id/action_taskList_to_taskDetailsFragment"
-            app:destination="@id/taskDetailsFragment" />
+            app:destination="@id/taskDetailsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -30,7 +34,7 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/mainFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_taskDetailsFragment"
+            android:id="@+id/mainToDetail"
             app:destination="@id/taskDetailsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
@@ -44,7 +48,7 @@
         android:label="fragment_sign_out"
         tools:layout="@layout/fragment_sign_out" >
         <action
-            android:id="@+id/action_signOutFragment_to_mainFragment"
+            android:id="@+id/signOutToMain"
             app:destination="@id/mainFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
@@ -68,8 +72,28 @@
             android:name="task_model"
             app:argType="com.example.zaribatodolist.data.model.TaskModel" />
         <action
-            android:id="@+id/action_taskDetailsFragment_to_mainFragment"
+            android:id="@+id/detailsToMain"
             app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigationMenuFragment"
+        android:name="com.example.zaribatodolist.presentation.navigationMenu.NavigationMenuFragment"
+        android:label="fragment_navigation_menu"
+        tools:layout="@layout/fragment_navigation_menu" >
+        <action
+            android:id="@+id/navigationToMain"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/navigationToDetails"
+            app:destination="@id/taskDetailsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"

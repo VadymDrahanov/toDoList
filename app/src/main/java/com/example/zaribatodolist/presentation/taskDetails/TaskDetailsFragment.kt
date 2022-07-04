@@ -1,7 +1,9 @@
 package com.example.zaribatodolist.presentation.taskDetails
 
+import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.databinding.FragmentTaskDetailsBinding
-import com.example.zaribatodolist.databinding.FragmentTodoTasksBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
-import com.example.zaribatodolist.presentation.toDoList.ToDoListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
@@ -40,9 +39,31 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
 
         binding.backbtn.setOnClickListener {
             Navigation.findNavController(view)
-                .navigate(R.id.action_taskDetailsFragment_to_mainFragment);
+                .popBackStack();
         }
 
+        binding.editTextNotes.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.handleNoteChange(s.toString())
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })
+
+        binding.checkBoxTaskName.setOnClickListener {
+            viewModel.handleCheckBoxClick()
+        }
         return view
     }
 

@@ -22,4 +22,7 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
+    <style name="ToolbarColoredBackArrow" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="android:textColorSecondary">@color/purple_light</item>
+    </style>
 </resources>
