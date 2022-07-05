@@ -1,11 +1,13 @@
 package com.example.zaribatodolist.di
 
 import com.example.zaribatodolist.domain.repository.AuthRepository
+import com.example.zaribatodolist.domain.repository.ListRepository
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.example.zaribatodolist.domain.usecase.authrepo.GetGoogleSignInClientUseCase
 import com.example.zaribatodolist.domain.usecase.authrepo.LoginWithGoogleUseCase
 import com.example.zaribatodolist.domain.usecase.authrepo.SignOutUseCase
+import com.example.zaribatodolist.domain.usecase.listrepo.*
 import com.example.zaribatodolist.domain.usecase.taskrepo.*
 import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoFromStorage
 import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
@@ -81,5 +83,36 @@ class DomainModule {
     @Provides
     fun provideTasksFilterUseCase(taskRepository: TaskRepository): ObservAndFilterTasksUseCase {
         return ObservAndFilterTasksUseCase(repo = taskRepository)
+    }
+
+    @Provides
+    fun provideGetListsUseCase(listRepository: ListRepository): GetListsUseCase {
+        return GetListsUseCase(listRepository = listRepository)
+    }
+
+    @Provides
+    fun provideCreateNewListUseCase(listRepository: ListRepository): CreateNewListUseCase {
+        return CreateNewListUseCase(listRepository = listRepository)
+    }
+
+
+    @Provides
+    fun provideObserveListUseCase(listRepository: ListRepository): ObserveListsUseCase {
+        return ObserveListsUseCase(repository = listRepository)
+    }
+
+    @Provides
+    fun provideGetCurrentListUseCase(listRepository: ListRepository): GetCurrentListUseCase {
+        return GetCurrentListUseCase(repository = listRepository)
+    }
+
+    @Provides
+    fun provideSetCurrentListUseCase(listRepository: ListRepository): SetCurrentListUseCase  {
+        return SetCurrentListUseCase(repository = listRepository)
+    }
+
+    @Provides
+    fun provideObserveCurrentListUseCase(listRepository: ListRepository): ObserveCurrentListUseCase  {
+        return ObserveCurrentListUseCase(repository = listRepository)
     }
 }

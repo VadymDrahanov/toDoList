@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.zaribatodolist.domain.usecase.authrepo.GetGoogleSignInClientUseCase
 import com.example.zaribatodolist.domain.usecase.authrepo.LoginWithGoogleUseCase
+import com.example.zaribatodolist.domain.usecase.listrepo.GetListsUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.GetUserTasksUseCase
 import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
 import com.example.zaribatodolist.domain.usecase.userrepo.SaveNewUserUseCase
@@ -17,9 +18,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val loginWithGoogleUseCase: LoginWithGoogleUseCase,
     private val getGoogleSignInClient: GetGoogleSignInClientUseCase,
-    private val saveNewUserUseCase: SaveNewUserUseCase,
-    private val getUserInfoUseCase: GetUserInfoUseCase,
-    private val getUserTasksUseCase: GetUserTasksUseCase
+    private val getUserTasksUseCase: GetUserTasksUseCase,
+    private val getListsUseCase: GetListsUseCase
 ) :
     BaseViewModel<AuthUIState>() {
 
@@ -99,7 +99,20 @@ class AuthViewModel @Inject constructor(
             getUserTasksUseCase.invoke(uid).addOnCompleteListener {
                 when {
                     it.isSuccessful -> {
-                        uistate.value = AuthUIState(false, true)
+                        viewModelScope.launch {
+
+                            getListsUseCase.invoke(uid).addOnCompleteListener { list_query ->
+                                when {
+                                    list_query.isSuccessful -> {
+                                        uistate.value = AuthUIState(false, true)
+                                    }
+                                    list_query.isCanceled -> {
+                                        uistate.value = AuthUIState(false, false)
+                                        Log.i("Error", "Something went wrong")
+                                    }
+                                }
+                            }
+                        }
                     }
                     it.isCanceled -> {
                         uistate.value = AuthUIState(false, false)

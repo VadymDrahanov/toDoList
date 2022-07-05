@@ -38,7 +38,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 if (state.isAthenticated) {
                     val intent = Intent(activity, MainActivity::class.java)
                     activity?.startActivity(intent)
-
                 }
             }
             if (state.isLoading) {

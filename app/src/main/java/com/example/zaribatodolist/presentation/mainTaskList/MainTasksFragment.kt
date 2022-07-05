@@ -25,8 +25,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
 
     private val viewModel : TaskListViewModel by viewModels()
-    private lateinit var mPager: ViewPager2
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +45,7 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         }.attach()
 
         binding.toolbar.inflateMenu(R.menu.toolbar_menu)
+        binding.toolbar.title = "To Do List"
 
         binding.toolbar.setOnMenuItemClickListener{
             if(it.itemId == R.id.goToSignOutButton){

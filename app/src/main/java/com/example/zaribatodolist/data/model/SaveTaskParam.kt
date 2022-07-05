@@ -4,5 +4,6 @@ data class SaveTaskParam(
     val title: String,
     val isCompleted: Boolean,
     val user_id: String,
-    val note: String = ""
+    val note: String = "",
+    val list_id: String
 )

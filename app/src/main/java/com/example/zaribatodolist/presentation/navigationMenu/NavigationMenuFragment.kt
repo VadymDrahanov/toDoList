@@ -3,6 +3,7 @@ package com.example.zaribatodolist.presentation.navigationMenu
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
+import com.example.zaribatodolist.databinding.FragmentDialogBinding
 import com.example.zaribatodolist.databinding.FragmentNavigationMenuBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
+import com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragmentDirections
 import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +36,8 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         _binding = getFragmentBinding(inflater, container)
         myView = binding.root
         val toolbar = binding.navigationToolbar
@@ -41,7 +46,8 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
         tasksRv = binding.tasksRv
 
-        viewModel.liveData.observe(viewLifecycleOwner, {
+        //search observer
+        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
             val customAdapter =
                 TasksAdapter(
                     it,
@@ -50,6 +56,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
             tasksRv.adapter = customAdapter
         })
 
+        //ui state observer
         viewModel.uistate.observe(viewLifecycleOwner, {
             when (it.isSearching) {
                 false -> {
@@ -63,25 +70,31 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
                 }
             }
         })
-        var list = ArrayList<String>()
-        list.add("asdfasdf")
-        list.add("asdfasdf")
-        list.add("asdfasdf")
-        list.add("asdfasdf")
-        list.add("asdfasdf")
 
-        binding.collectionRV.layoutManager = LinearLayoutManager(context)
-        val customAdapter = CollectionRVAdapter (list)
-        binding.collectionRV.adapter = customAdapter
+        viewModel.listsLiveData.observe(viewLifecycleOwner, {
+            val customAdapter = CollectionRVAdapter(it, { id -> onViewClick(id) })
+            binding.collectionRV.layoutManager = LinearLayoutManager(context)
+            binding.collectionRV.adapter = customAdapter
+        })
 
         binding.goToTasksLayout.setOnClickListener {
+            viewModel.handleListItemClick("main")
             Navigation.findNavController(myView).navigate(R.id.navigationToMain)
+        }
+
+        binding.addBtn.setOnClickListener {
+            launchCustomAlertDialog()
         }
         return myView
     }
 
+    private fun onViewClick(collectionID: String) {
+        viewModel.handleListItemClick(collectionID)
+        Navigation.findNavController(myView).navigate(R.id.navigationToMain)
+    }
+
     private fun onListItemClick(id: String) {
-        Toast.makeText(context, "this, mRepos[position].name", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "this, mRepos[position].name", Toast.LENGTH_SHORT).show()
     }
 
     private fun onCardViewClick(task: TaskModel) {
@@ -89,18 +102,40 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
         //viewModel.handleCheckBoxClick(id)
         Navigation.findNavController(myView)
             .navigate(
-                NavigationMenuFragmentDirections.navigationToDetails(
-                    task
-                )
+                NavigationMenuFragmentDirections.navigationToDetails(task)
             )
 
     }
 
+    private fun launchCustomAlertDialog() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        val li = LayoutInflater.from(requireContext())
+
+        val dialog_binding: FragmentDialogBinding = FragmentDialogBinding.inflate(li)
+        builder.setView(dialog_binding.root)
+
+        builder.setTitle("New list")
+
+        dialog_binding.addListBtn.setOnClickListener {
+            val title: String = dialog_binding.textInputLayout.editText!!.text.toString()
+            if (!title.isBlank() || title != " ") {
+                viewModel.handleAddNewList(
+                    title,
+                    FirebaseAuth.getInstance().currentUser!!.uid.toString()
+                )
+            }
+        }
+
+        builder.create()
+        builder.show()
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
 
-        val search = menu?.findItem(R.id.menu_search)
+        val search = menu.findItem(R.id.menu_search)
         val searchView = search?.actionView as? SearchView
 
         searchView?.isSubmitButtonEnabled = true
@@ -117,7 +152,6 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         viewModel.handleSearch(query)
-
         return true
     }
 

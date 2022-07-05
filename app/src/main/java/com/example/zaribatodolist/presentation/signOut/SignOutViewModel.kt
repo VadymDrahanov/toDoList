@@ -20,7 +20,7 @@ class SignOutViewModel @Inject constructor(
 
 ) : BaseViewModel<SignOutUIState>() {
 
-    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasks
+    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasksData
 
 //    fun getUserInfo(uid: String) {
 //        //uistate.value = SignOutUIState(true, false)

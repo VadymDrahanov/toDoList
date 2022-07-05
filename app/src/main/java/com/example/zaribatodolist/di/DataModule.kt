@@ -3,6 +3,7 @@ package com.example.zaribatodolist.di
 import android.content.Context
 import com.example.zaribatodolist.data.repository.*
 import com.example.zaribatodolist.domain.repository.AuthRepository
+import com.example.zaribatodolist.domain.repository.ListRepository
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.example.zaribatodolist.domain.repository.UserRepository
 import dagger.Module
@@ -28,5 +29,9 @@ class DataModule {
     @Provides
     @Singleton
     fun provideUserRepository(): UserRepository = UserRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideListRepository(): ListRepository = ListRepositoryImpl()
 
 }

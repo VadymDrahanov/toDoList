@@ -12,5 +12,5 @@ class CompletedListViewModel @Inject constructor(
     tasksObserverUseCase: ObservTasksUseCase
 ) :
     BaseViewModel<CompletedUIState>() {
-    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasks
+    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasksData
 }

@@ -22,7 +22,8 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
 
 
     private val viewModel: ToDoListViewModel by viewModels()
-    private lateinit var myView : View
+    private lateinit var myView: View
+    private var tasksList = ArrayList<TaskModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,31 +38,31 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         }
 
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
+        val adapter = TasksAdapter(tasksList,
+            { id -> onCheckBoxListItemClick(id) },
+            { task -> onCardViewClick(task) })
+
+        binding.tasksRv.adapter = adapter
 
         viewModel.liveData.observe(viewLifecycleOwner, {
-            Toast.makeText(context, "I am called", Toast.LENGTH_SHORT).show()
-
+            Toast.makeText(context, it.size.toString(), Toast.LENGTH_SHORT).show()
             val list =
                 it.filter {
                     it.isCompleted == false
-                }
-            val customAdapter =
-                TasksAdapter(list as ArrayList<TaskModel>, { id -> onCheckBoxListItemClick(id)}, {task -> onCardViewClick(task)})
-            binding.tasksRv.adapter = customAdapter
+                } as ArrayList<TaskModel> /* = java.util.ArrayList<com.example.zaribatodolist.data.model.TaskModel> */
+            adapter.bindList(list)
         })
+
 
         return myView
     }
 
     private fun onCheckBoxListItemClick(id: String) {
-        //Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
         viewModel.handleCheckBoxClick(id)
     }
 
     private fun onCardViewClick(task: TaskModel) {
-        //Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
-        //viewModel.handleCheckBoxClick(id)
-        //Navigation.findNavController(myView).navigate(R.id.action_mainFragment_to_taskDetailsFragment);
+
         Navigation.findNavController(myView)
             .navigate(MainTasksFragmentDirections.mainToDetail(task))
     }

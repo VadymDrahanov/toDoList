@@ -29,7 +29,8 @@ class TasksRepositoryImpl : TaskRepository {
                             title = task.title,
                             uid = it.getResult().id,
                             isCompleted = false,
-                            user_id = task.user_id
+                            user_id = task.user_id,
+                            list_id = task.list_id
                         )
                     )
                     tasksLiveData.value = userTasks
@@ -113,7 +114,8 @@ class TasksRepositoryImpl : TaskRepository {
                     isCompleted = doc.get("completed") as Boolean,
                     user_id = doc.get("user_id").toString(),
                     note = doc.get("note").toString(),
-                    uid = res.getResult().documents.get(i).id
+                    uid = res.getResult().documents.get(i).id,
+                    list_id = doc.get("list_id").toString()
                 )
                 userTasks.add(model)
             }

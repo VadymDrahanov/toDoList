@@ -11,7 +11,7 @@ import com.example.zaribatodolist.data.model.TaskModel
 
 
 class TasksAdapter(
-    private val dataSet: ArrayList<TaskModel>,
+    private var tasks: ArrayList<TaskModel>,
     private val onCheckBoxClick: (id: String) -> Unit,
     private val onCardViewClick: (task: TaskModel) -> Unit
 ) :
@@ -26,23 +26,28 @@ class TasksAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        if (dataSet.get(position).isCompleted) {
+        if (tasks.get(position).isCompleted) {
             viewHolder.titleCheckBox.isChecked = true
             viewHolder.titleCheckBox.isEnabled = false
         }
 
-        viewHolder.titleCheckBox.text = dataSet.get(position).title
+        viewHolder.titleCheckBox.text = tasks.get(position).title
 
         viewHolder.titleCheckBox.setOnClickListener {
-            onCheckBoxClick(dataSet.get(position).uid)
+            onCheckBoxClick(tasks.get(position).uid)
         }
 
         viewHolder.main_layout.setOnClickListener {
-            onCardViewClick(dataSet.get(position))
+            onCardViewClick(tasks.get(position))
         }
     }
 
-    override fun getItemCount() = dataSet.size
+    fun bindList(list: ArrayList<TaskModel>) {
+        tasks = list
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount() = tasks.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleCheckBox = itemView.findViewById<CheckBox>(R.id.checkBoxTaskName)
