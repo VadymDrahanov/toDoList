@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentComletedTasksBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
@@ -28,7 +27,7 @@ class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
 
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
 
-        viewModel.liveData.observe(viewLifecycleOwner, {
+        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
             var list =
                 it.filter {
                     it.isCompleted == true

@@ -8,6 +8,7 @@ import com.example.zaribatodolist.domain.usecase.authrepo.GetGoogleSignInClientU
 import com.example.zaribatodolist.domain.usecase.authrepo.LoginWithGoogleUseCase
 import com.example.zaribatodolist.domain.usecase.authrepo.SignOutUseCase
 import com.example.zaribatodolist.domain.usecase.listrepo.*
+import com.example.zaribatodolist.domain.usecase.logic.FilterTasksUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.*
 import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoFromStorage
 import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
@@ -114,5 +115,10 @@ class DomainModule {
     @Provides
     fun provideObserveCurrentListUseCase(listRepository: ListRepository): ObserveCurrentListUseCase  {
         return ObserveCurrentListUseCase(repository = listRepository)
+    }
+
+    @Provides
+    fun provideFilterTaskUseCase(): FilterTasksUseCase  {
+        return FilterTasksUseCase()
     }
 }
