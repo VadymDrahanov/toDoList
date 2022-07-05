@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.domain.usecase.listrepo.ObserveCurrentListUseCase
+import com.example.zaribatodolist.domain.usecase.logic.FilterTaskByListUseCase
 import com.example.zaribatodolist.domain.usecase.logic.FilterTasksUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.AddNewTaskUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.ObservTasksUseCase
@@ -19,7 +20,8 @@ class ToDoListViewModel @Inject constructor(
     private val updateTaskCompletionUseCase: UpdateTaskCompletionUseCase,
     private val tasksObserverUseCase: ObservTasksUseCase,
     private val observeCurrentListUseCase: ObserveCurrentListUseCase,
-    private val filterTasksUseCase: FilterTasksUseCase
+    private val filterTasksUseCase: FilterTasksUseCase,
+    private val filterTaskByListUseCase: FilterTaskByListUseCase
 ) :
     BaseViewModel<ToDoListUIState>() {
 
@@ -30,8 +32,20 @@ class ToDoListViewModel @Inject constructor(
         updateTaskCompletionUseCase.invoke(id)
     }
 
-    fun handleDataChange(){
+    fun handleDataChange() {
         uistate.value =
             ToDoListUIState(taskList = liveData.value?.let { filterTasksUseCase.invoke(false, it) })
+    }
+
+    fun handleListChange() {
+        //handleListChange()
+        uistate.value =
+            ToDoListUIState(taskList = liveData.value?.let {
+                currentUser.value?.let { it1 ->
+                    filterTaskByListUseCase.invoke(
+                        it1, it
+                    )
+                }
+            })
     }
 }

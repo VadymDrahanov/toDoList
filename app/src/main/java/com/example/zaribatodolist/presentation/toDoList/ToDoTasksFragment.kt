@@ -45,19 +45,19 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         binding.tasksRv.adapter = adapter
 
         viewModel.liveData.observe(viewLifecycleOwner, {
-            Toast.makeText(context, it.size.toString(), Toast.LENGTH_SHORT).show()
-//            val list =
-//                it.filter {
-//                    it.isCompleted == false
-//                } as ArrayList<TaskModel> /* = java.util.ArrayList<com.example.zaribatodolist.data.model.TaskModel> */
-//            adapter.bindList(list)
+            Toast.makeText(requireContext(), "I am here", Toast.LENGTH_SHORT).show()
             viewModel.handleDataChange()
+            viewModel.handleListChange()
         })
 
         viewModel.uistate.observe(viewLifecycleOwner, {
-            Toast.makeText(context, "I am in life", Toast.LENGTH_SHORT).show()
             adapter.bindList(it.taskList!!)
         })
+
+        viewModel.currentUser.observe(viewLifecycleOwner, {
+            viewModel.handleListChange()
+        })
+
 
         return myView
     }
