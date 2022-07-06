@@ -127,4 +127,9 @@ class DomainModule {
     fun provideFilterTaskByListUseCase(): FilterTaskByListUseCase  {
         return FilterTaskByListUseCase()
     }
+
+    @Provides
+    fun provideRemoveTasksUseCase(taskRepository: TaskRepository) : RemoveTasksUseCase {
+        return RemoveTasksUseCase(repository = taskRepository)
+    }
 }

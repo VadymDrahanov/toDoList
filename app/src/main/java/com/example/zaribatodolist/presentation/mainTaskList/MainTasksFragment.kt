@@ -5,26 +5,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-import androidx.viewpager2.widget.ViewPager2
 import com.example.zaribatodolist.R
+import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentTasksMainBinding
+import com.example.zaribatodolist.presentation.sharedViewModel.SharedViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-
-
-
 
 @AndroidEntryPoint
 class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
 
-    private val viewModel : TaskListViewModel by viewModels()
+    private val viewModel: MainTasksViewModel by viewModels()
+    private val shareModel: SharedViewModel by activityViewModels()
+    private var listOfSelectedItems = ArrayList<TaskModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +40,7 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            when(position){
+            when (position) {
                 0 -> tab.text = "To Do"
                 else -> tab.text = "Completed"
             }
@@ -47,15 +49,22 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         binding.toolbar.inflateMenu(R.menu.toolbar_menu)
         binding.toolbar.title = "To Do List"
 
-        binding.toolbar.setOnMenuItemClickListener{
-            if(it.itemId == R.id.goToSignOutButton){
-                Toast.makeText(context,
-                    "This a toast message",
-                    Toast.LENGTH_LONG);
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.goToSignOutButton) {
                 Navigation.findNavController(view).navigate(R.id.mainFragment_to_SignOut);
+            }
+            if (it.itemId == R.id.removeItemsButton) {
+                viewModel.removeTasks(listOfSelectedItems)
+                listOfSelectedItems.clear()
             }
             true
         }
+
+        shareModel.selectedItem.observe(viewLifecycleOwner, Observer<ArrayList<TaskModel>> {
+            listOfSelectedItems = it
+            Log.d("TAG", it.size.toString())
+        })
+
         return view
     }
 

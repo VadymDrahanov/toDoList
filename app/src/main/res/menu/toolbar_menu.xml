@@ -14,6 +14,7 @@
         android:iconTint="@color/white"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/removeItemsButton"
         android:title="Profile"
         android:icon="@drawable/ic_delete"
         android:iconTint="@color/white"

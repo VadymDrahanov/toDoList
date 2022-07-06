@@ -52,7 +52,8 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
                 TasksAdapter(
                     it,
                     { id -> onListItemClick(id) },
-                    { task -> onCardViewClick(task) })
+                    { task -> onCardViewClick(task) },
+                    {task -> onCardViewLongClick(task)})
             tasksRv.adapter = customAdapter
         })
 
@@ -94,9 +95,12 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
     }
 
     private fun onListItemClick(id: String) {
-        //Toast.makeText(context, "this, mRepos[position].name", Toast.LENGTH_SHORT).show()
+        //do nothing
     }
 
+    private fun onCardViewLongClick(id: TaskModel) {
+        //do nothing
+    }
     private fun onCardViewClick(task: TaskModel) {
         Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
         //viewModel.handleCheckBoxClick(id)

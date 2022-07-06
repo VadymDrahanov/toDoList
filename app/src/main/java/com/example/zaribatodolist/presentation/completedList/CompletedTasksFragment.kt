@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentComletedTasksBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
+import com.example.zaribatodolist.presentation.sharedViewModel.SharedViewModel
 import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +19,8 @@ class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
 
     private val viewModel: CompletedListViewModel by viewModels()
     private var tasksList = ArrayList<TaskModel>()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,32 +32,37 @@ class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
 
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
         val adapter = TasksAdapter(tasksList,
-            { id -> onListItemClick(id) },
-            { task -> onCardViewClick(task) })
+            { id -> onCheckBoxClick(id) },
+            { task -> onCardViewClick(task) },
+            { id -> onCardViewLongClick(id) })
 
         binding.tasksRv.adapter = adapter
 
-        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
+        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
             viewModel.handleDataChanged()
-        })
+        }
 
-        viewModel.uistate.observe(viewLifecycleOwner, {
+        viewModel.uistate.observe(viewLifecycleOwner) {
             adapter.bindList(it.taskList!!)
-        })
+        }
 
-        viewModel.listLiveData.observe(viewLifecycleOwner, {
+        viewModel.listLiveData.observe(viewLifecycleOwner) {
             viewModel.handleDataChanged()
-        })
+        }
+
         return view
     }
 
-    private fun onListItemClick(id: String) {
-        Toast.makeText(context, "this, mRepos[position].name", Toast.LENGTH_SHORT).show()
+    private fun onCardViewLongClick(task: TaskModel) {
+        sharedViewModel.select(task)
+    }
 
+    private fun onCheckBoxClick(id: String) {
+        //do nothing
     }
 
     private fun onCardViewClick(task: TaskModel) {
-        Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
+        //do nothing
         //viewModel.handleCheckBoxClick(id)
     }
 

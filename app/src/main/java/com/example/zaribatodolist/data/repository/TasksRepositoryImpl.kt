@@ -11,7 +11,6 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlin.collections.ArrayList
 
 
 class TasksRepositoryImpl : TaskRepository {
@@ -40,9 +39,6 @@ class TasksRepositoryImpl : TaskRepository {
 
     }
 
-    override fun removeTask() {
-
-    }
 
     override fun updateTaskNote(id: String, newNote: String) {
         Log.i("----------------------------------------------------------------", id)
@@ -136,4 +132,22 @@ class TasksRepositoryImpl : TaskRepository {
         return userTasks
     }
 
+    override fun removeTasks(tasks: ArrayList<TaskModel>) {
+        val docRef = db.collection("tasks")
+
+        for (task in tasks) {
+            docRef.document(task.uid).delete().addOnCompleteListener {
+                when {
+                    it.isSuccessful -> {
+                        userTasks.remove(task)
+                        Log.i(
+                            "----------------------------------------------------------------",
+                            "Here"
+                        )
+                        tasksLiveData.value = userTasks
+                    }
+                }
+            }
+        }
+    }
 }

@@ -11,6 +11,6 @@ data class TaskModel(
     val uid: String,
     val note: String = "",
     val list_id: String,
-    val isSelected: Boolean = false
+    var isSelected: Boolean = false
 ) :
     Parcelable

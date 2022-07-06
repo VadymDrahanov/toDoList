@@ -1,5 +1,7 @@
 package com.example.zaribatodolist.presentation.completedList
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.domain.usecase.listrepo.ObserveCurrentListUseCase
@@ -26,8 +28,21 @@ class CompletedListViewModel @Inject constructor(
             CompletedUIState(taskList = tasksLiveData.value?.let {
                 listLiveData.value?.let { it1 ->
                     filterTaskByListUseCase.invoke(
-                        it1, it, true)
+                        it1, it, true
+                    )
                 }
             })
+    }
+
+    var listOfTasks: ArrayList<TaskModel> = ArrayList()
+    fun handleOnLongClick(id: TaskModel) {
+        for(task in listOfTasks){
+            if(id.uid.equals(task.uid)){
+                listOfTasks.remove(task)
+            }else{
+                listOfTasks.add(task)
+            }
+        }
+
     }
 }

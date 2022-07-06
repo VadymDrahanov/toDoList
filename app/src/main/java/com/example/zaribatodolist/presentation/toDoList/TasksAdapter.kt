@@ -13,7 +13,8 @@ import com.example.zaribatodolist.data.model.TaskModel
 class TasksAdapter(
     private var tasks: ArrayList<TaskModel>,
     private val onCheckBoxClick: (id: String) -> Unit,
-    private val onCardViewClick: (task: TaskModel) -> Unit
+    private val onCardViewClick: (task: TaskModel) -> Unit,
+    private val onCardViewLongClick: (id: TaskModel) -> Unit
 ) :
     RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
 
@@ -26,27 +27,30 @@ class TasksAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
+        viewHolder.titleCheckBox.isChecked = false
+
         if (tasks.get(position).isCompleted) {
-            viewHolder.titleCheckBox.isChecked = true
-            viewHolder.titleCheckBox.isEnabled = false
-        }else {
-            viewHolder.titleCheckBox.isChecked = false
-            viewHolder.titleCheckBox.isEnabled = true
+            viewHolder.starCheckBox.isChecked = true
+            viewHolder.starCheckBox.isEnabled = false
+        } else {
+            viewHolder.starCheckBox.isChecked = false
+            viewHolder.starCheckBox.isEnabled = true
         }
 
         viewHolder.titleCheckBox.text = tasks.get(position).title
 
-        viewHolder.titleCheckBox.setOnClickListener {
+        viewHolder.starCheckBox.setOnClickListener {
             onCheckBoxClick(tasks.get(position).uid)
         }
 
         viewHolder.main_layout.setOnClickListener {
             onCardViewClick(tasks.get(position))
         }
-//
-//        viewHolder.main_layout.setOnLongClickListener {
-//
-//        }
+
+        viewHolder.titleCheckBox.setOnClickListener {
+            if(viewHolder.titleCheckBox.isChecked)
+                onCardViewLongClick(tasks[position])
+        }
     }
 
     fun bindList(list: ArrayList<TaskModel>) {

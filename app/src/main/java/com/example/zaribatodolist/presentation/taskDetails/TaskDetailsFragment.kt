@@ -31,11 +31,11 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
         val amount = args.taskModel
         viewModel.getTask(amount.uid)
 
-        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
-            binding.checkBoxTaskName.isChecked = it.isCompleted
-            binding.checkBoxTaskName.text = it.title
+        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
+            binding.checkBoxTaskNameDetails.isChecked = it.isCompleted
+            binding.checkBoxTaskNameDetails.text = it.title
             binding.editTextNotes.setText(it.note)
-        })
+        }
 
         binding.backbtn.setOnClickListener {
             Navigation.findNavController(view)
@@ -61,7 +61,7 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
             }
         })
 
-        binding.checkBoxTaskName.setOnClickListener {
+        binding.checkBoxTaskNameDetails.setOnClickListener {
             viewModel.handleCheckBoxClick()
         }
         return view
