@@ -43,6 +43,10 @@ class TasksAdapter(
         viewHolder.main_layout.setOnClickListener {
             onCardViewClick(tasks.get(position))
         }
+//
+//        viewHolder.main_layout.setOnLongClickListener {
+//
+//        }
     }
 
     fun bindList(list: ArrayList<TaskModel>) {

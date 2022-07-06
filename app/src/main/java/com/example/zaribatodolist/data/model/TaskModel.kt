@@ -10,6 +10,7 @@ data class TaskModel(
     val user_id: String,
     val uid: String,
     val note: String = "",
-    val list_id: String
+    val list_id: String,
+    val isSelected: Boolean = false
 ) :
     Parcelable
