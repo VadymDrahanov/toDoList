@@ -48,8 +48,7 @@ class TasksAdapter(
         }
 
         viewHolder.titleCheckBox.setOnClickListener {
-            if(viewHolder.titleCheckBox.isChecked)
-                onCardViewLongClick(tasks[position])
+            onCardViewLongClick(tasks[position])
         }
     }
 
