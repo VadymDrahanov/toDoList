@@ -10,7 +10,6 @@ import com.example.zaribatodolist.domain.usecase.taskrepo.AddNewTaskUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.ObservTasksUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.UpdateTaskCompletionUseCase
 import com.example.zaribatodolist.presentation.base.BaseViewModel
-import com.example.zaribatodolist.presentation.base.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,26 +24,25 @@ class ToDoListViewModel @Inject constructor(
 ) :
     BaseViewModel<ToDoListUIState>() {
 
-    val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasksData
-    val currentUser: LiveData<String> = observeCurrentListUseCase.currentLists
+    val tasksLiveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasksData
+    val currentList: LiveData<String> = observeCurrentListUseCase.currentLists
 
     fun handleCheckBoxClick(id: String) {
         updateTaskCompletionUseCase.invoke(id)
     }
 
-    fun handleDataChange() {
-        uistate.value =
-            ToDoListUIState(taskList = liveData.value?.let { filterTasksUseCase.invoke(false, it) })
-    }
+//    fun handleDataChange() {
+//        uistate.value =
+//            ToDoListUIState(taskList = tasksLiveData.value?.let { filterTasksUseCase.invoke(false, it) })
+//    }
 
     fun handleListChange() {
         //handleListChange()
         uistate.value =
-            ToDoListUIState(taskList = liveData.value?.let {
-                currentUser.value?.let { it1 ->
+            ToDoListUIState(taskList = tasksLiveData.value?.let {
+                currentList.value?.let { it1 ->
                     filterTaskByListUseCase.invoke(
-                        it1, it
-                    )
+                        it1, it, false)
                 }
             })
     }

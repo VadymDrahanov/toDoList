@@ -29,6 +29,9 @@ class TasksAdapter(
         if (tasks.get(position).isCompleted) {
             viewHolder.titleCheckBox.isChecked = true
             viewHolder.titleCheckBox.isEnabled = false
+        }else {
+            viewHolder.titleCheckBox.isChecked = false
+            viewHolder.titleCheckBox.isEnabled = true
         }
 
         viewHolder.titleCheckBox.text = tasks.get(position).title

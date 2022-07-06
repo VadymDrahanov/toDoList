@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentTodoTasksBinding
 import com.example.zaribatodolist.presentation.addTask.AddTaskFragment
@@ -16,10 +15,8 @@ import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
-
 
     private val viewModel: ToDoListViewModel by viewModels()
     private lateinit var myView: View
@@ -44,9 +41,8 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
 
         binding.tasksRv.adapter = adapter
 
-        viewModel.liveData.observe(viewLifecycleOwner, {
+        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
             Toast.makeText(requireContext(), "I am here", Toast.LENGTH_SHORT).show()
-            viewModel.handleDataChange()
             viewModel.handleListChange()
         })
 
@@ -54,11 +50,9 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
             adapter.bindList(it.taskList!!)
         })
 
-        viewModel.currentUser.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             viewModel.handleListChange()
         })
-
-
         return myView
     }
 
@@ -67,7 +61,6 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
     }
 
     private fun onCardViewClick(task: TaskModel) {
-
         Navigation.findNavController(myView)
             .navigate(MainTasksFragmentDirections.mainToDetail(task))
     }

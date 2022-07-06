@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
 
     private val viewModel: CompletedListViewModel by viewModels()
+    private var tasksList = ArrayList<TaskModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,22 +26,25 @@ class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
         _binding = getFragmentBinding(inflater, container)
         val view = binding.root
 
+
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
+        val adapter = TasksAdapter(tasksList,
+            { id -> onListItemClick(id) },
+            { task -> onCardViewClick(task) })
+
+        binding.tasksRv.adapter = adapter
 
         viewModel.tasksLiveData.observe(viewLifecycleOwner, {
-            var list =
-                it.filter {
-                    it.isCompleted == true
-                }
-            val customAdapter =
-                TasksAdapter(
-                    list as ArrayList<TaskModel>,
-                    { id -> onListItemClick(id) },
-                    { task -> onCardViewClick(task) })
-
-            binding.tasksRv.adapter = customAdapter
+            viewModel.handleDataChanged()
         })
 
+        viewModel.uistate.observe(viewLifecycleOwner, {
+            adapter.bindList(it.taskList!!)
+        })
+
+        viewModel.listLiveData.observe(viewLifecycleOwner, {
+            viewModel.handleDataChanged()
+        })
         return view
     }
 
