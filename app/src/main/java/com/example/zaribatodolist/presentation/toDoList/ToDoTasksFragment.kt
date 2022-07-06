@@ -49,6 +49,10 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         viewModel.uistate.observe(viewLifecycleOwner, {
             adapter.bindList(it.taskList!!)
         })
+        binding.addBtn.setOnLongClickListener() {
+            Toast.makeText(requireContext(), "Msg", Toast.LENGTH_SHORT).show()
+            true
+        }
 
         viewModel.currentList.observe(viewLifecycleOwner, {
             viewModel.handleListChange()
