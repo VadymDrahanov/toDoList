@@ -22,16 +22,6 @@ class SignOutViewModel @Inject constructor(
 
     val liveData: LiveData<ArrayList<TaskModel>> = tasksObserverUseCase.userTasksData
 
-//    fun getUserInfo(uid: String) {
-//        //uistate.value = SignOutUIState(true, false)
-//        if(getUserInfoFromStorage.invoke() == null){
-//            Log.i("Error", "Some problem with user")
-//            signOut()
-//        }else{
-//            _successGetUserInfo.postValue(getUserInfoFromStorage.invoke())
-//            uistate.value = SignOutUIState(false, false)
-//        }
-//    }
 
     fun signOut() {
         signOutUseCase.invoke()

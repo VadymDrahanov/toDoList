@@ -1,10 +1,8 @@
 package com.example.zaribatodolist.presentation.navigationMenu
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
@@ -13,10 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
-import com.example.zaribatodolist.databinding.FragmentDialogBinding
 import com.example.zaribatodolist.databinding.FragmentNavigationMenuBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
-import com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragmentDirections
+import com.example.zaribatodolist.presentation.dialog.CustomAlertDialogWithTextField
 import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -113,18 +110,16 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
 
     }
 
+    lateinit var dialog: CustomAlertDialogWithTextField
+
     private fun launchCustomAlertDialog() {
+        dialog = CustomAlertDialogWithTextField(requireContext())
+        dialog.setTitle("New List")
 
-        val builder = AlertDialog.Builder(requireContext())
-        val li = LayoutInflater.from(requireContext())
 
-        val dialog_binding: FragmentDialogBinding = FragmentDialogBinding.inflate(li)
-        builder.setView(dialog_binding.root)
 
-        builder.setTitle("New list")
-
-        dialog_binding.addListBtn.setOnClickListener {
-            val title: String = dialog_binding.textInputLayout.editText!!.text.toString()
+        dialog.setOnPositiveBtnClickListener {
+            val title: String = dialog.getTextFieldResult()
             if (!title.isBlank() || title != " ") {
                 viewModel.handleAddNewList(
                     title,
@@ -133,8 +128,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
             }
         }
 
-        builder.create()
-        builder.show()
+        dialog.show()
 
     }
 

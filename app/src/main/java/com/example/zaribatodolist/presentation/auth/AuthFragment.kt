@@ -2,6 +2,7 @@ package com.example.zaribatodolist.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,10 +54,14 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         val signInAction =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(it?.data)
-                if (task.isSuccessful) {
-                    val account = task.getResult(ApiException::class.java)!!
-                    viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                Log.i("Tag", "I in sign")
+                task.addOnCompleteListener {
+                    if (task.isSuccessful) {
+                        val account = task.getResult(ApiException::class.java)!!
+                        viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                    }
                 }
+
             }
 
 //        if (auth.currentUser != null) {
@@ -65,8 +70,10 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
         binding.signInWithGoogleBtn.setOnClickListener {
             if (auth.currentUser != null) {
+                Log.i("Tag", "I in if")
                 viewModel.getUserInfo(auth.currentUser!!.uid)
             } else {
+                Log.i("Tag", "I in else")
                 signInAction.launch(viewModel.getGoogleSignIn().signInIntent)
             }
         }

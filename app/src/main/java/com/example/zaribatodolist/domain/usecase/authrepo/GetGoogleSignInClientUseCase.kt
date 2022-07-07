@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetGoogleSignInClientUseCase  @Inject constructor(private val repository: AuthRepository){
 
     @Throws(Exception::class)
-    operator fun invoke() : GoogleSignInClient {
+    fun invoke() : GoogleSignInClient {
         return repository.getGoogleSignInClient()
     }
 }

@@ -10,30 +10,7 @@ import androidx.viewbinding.ViewBinding
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.databinding.FragmentDialogBinding
 
-
-class AlertDialogConfiguration<B : ViewBinding>(context: Context) : AlertDialog.Builder(context) {
-    lateinit var mAlertDialog: AlertDialog
-
-    private var _binding: B? = null
-    private val binding get() = _binding!!
-
-    override fun show(): AlertDialog? {
-        val content: View = LayoutInflater.from(context).inflate(R.layout.fragment_dialog, null)
-        setView(content)
-        mAlertDialog = super.show();
-        return mAlertDialog;
-    }
-
-    override fun setNegativeButton(
-        textId: Int,
-        listener: DialogInterface.OnClickListener?
-    ): AlertDialog.Builder {
-        return super.setNegativeButton(textId, listener)
-    }
-
-}
-
-class CustomAlertDialog(context: Context, private val onPositiveBtnClick: () -> Unit) :
+class CustomAlertDialogWithTextField(context: Context) :
     AlertDialog(context) {
 
     private lateinit var binding: FragmentDialogBinding
@@ -49,10 +26,20 @@ class CustomAlertDialog(context: Context, private val onPositiveBtnClick: () -> 
             dismiss()
         }
 
+    }
+
+    fun setTitle(title: String) {
+        setTitle(title)
+    }
+
+    fun setButtonText(text: String) {
+        binding.addListBtn.text = text
+    }
+
+    fun setOnPositiveBtnClickListener(onPositiveBtnClick: () -> Unit) {
         binding.addListBtn.setOnClickListener {
             onPositiveBtnClick()
         }
-
     }
 
     fun getTextFieldResult(): String {
