@@ -14,7 +14,6 @@ import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +34,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         /////////////// State Observer //////////////////////////////////
         val stateObserver = Observer<AuthUIState> { state ->
             if (!state.isLoading) {
-                if (state.isAthenticated) {
+                if (state.isAuthenticated) {
                     val intent = Intent(activity, MainActivity::class.java)
                     activity?.startActivity(intent)
                 }

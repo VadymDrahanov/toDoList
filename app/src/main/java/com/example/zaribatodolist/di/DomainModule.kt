@@ -11,9 +11,7 @@ import com.example.zaribatodolist.domain.usecase.listrepo.*
 import com.example.zaribatodolist.domain.usecase.logic.FilterTaskByListUseCase
 import com.example.zaribatodolist.domain.usecase.logic.FilterTasksUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.*
-import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoFromStorage
-import com.example.zaribatodolist.domain.usecase.userrepo.GetUserInfoUseCase
-import com.example.zaribatodolist.domain.usecase.userrepo.SaveNewUserUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -131,5 +129,15 @@ class DomainModule {
     @Provides
     fun provideRemoveTasksUseCase(taskRepository: TaskRepository) : RemoveTasksUseCase {
         return RemoveTasksUseCase(repository = taskRepository)
+    }
+
+    @Provides
+    fun provideAddTaskToUserDocUseCase(userRepository: UserRepository) : AddNewTaskToUserUseCase {
+        return AddNewTaskToUserUseCase(userRepository = userRepository)
+    }
+
+    @Provides
+    fun provideShareTasksUseCase(userRepository: UserRepository) : ShareTasksUseCase {
+        return ShareTasksUseCase(userRepository = userRepository)
     }
 }

@@ -9,13 +9,14 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:title="Profile"
-        android:icon="@drawable/ic_edit"
+        android:id="@+id/shareTaskButton"
+        android:title="Share"
+        android:icon="@drawable/ic_share"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/removeItemsButton"
-        android:title="Profile"
+        android:title="Delete"
         android:icon="@drawable/ic_delete"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom" />

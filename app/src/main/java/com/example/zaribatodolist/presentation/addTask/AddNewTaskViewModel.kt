@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.domain.usecase.listrepo.GetCurrentListUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.AddNewTaskUseCase
+import com.example.zaribatodolist.domain.usecase.userrepo.AddNewTaskToUserUseCase
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class AddNewTaskViewModel @Inject constructor(
     private val addNewTaskUseCase: AddNewTaskUseCase,
-    private val getCurrentListUseCase: GetCurrentListUseCase
+    private val getCurrentListUseCase: GetCurrentListUseCase,
+    private val addNewTaskUseCaseToUserDocument: AddNewTaskToUserUseCase
 ) :
     BaseViewModel<AddNewTaskUIState>() {
 
@@ -34,6 +36,7 @@ class AddNewTaskViewModel @Inject constructor(
                 uistate.value = AddNewTaskUIState(false)
                 when {
                     it.isSuccessful -> {
+                        addNewTaskUseCaseToUserDocument.invoke(it.getResult().id)
                         uistate.value = AddNewTaskUIState(true)
                         Log.i("Success", "Task was written")
 

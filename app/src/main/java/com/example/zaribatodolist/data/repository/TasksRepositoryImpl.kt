@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task
 
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldPath.documentId
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -98,34 +99,54 @@ class TasksRepositoryImpl : TaskRepository {
 
         userTasks.clear()
         tasksLiveData.value?.clear()
-
+        val temp = db.collection("tasks").get()
         Log.i("----------------------------------------------------------------", "Query Called")
-        val res = db.collection("tasks").whereEqualTo("user_id", uid).get()
+        val userRef = db.collection("users").whereEqualTo("uid", uid).get()
 
-        res.addOnCompleteListener {
-            for (i in 0..it.getResult().documents.size - 1) {
-                val doc = res.getResult().documents.get(i).data
-                val model = TaskModel(
-                    title = doc!!.get("title").toString(),
-                    isCompleted = doc.get("completed") as Boolean,
-                    user_id = doc.get("user_id").toString(),
-                    note = doc.get("note").toString(),
-                    uid = res.getResult().documents.get(i).id,
-                    list_id = doc.get("list_id").toString()
-                )
-                userTasks.add(model)
+        var listOfTaskKeys = ArrayList<String>()
+
+        userRef.addOnCompleteListener {
+            listOfTaskKeys =
+                it.result.documents[0].data!!["tasks"] as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */
+
+            if (listOfTaskKeys.isNotEmpty()) {
+                val res = db.collection("tasks").whereIn(documentId(), listOfTaskKeys).get()
+
+                userRef.addOnSuccessListener {
+                    Log.i(
+                        "----------------------------------------------------------------",
+                        "res2: " + listOfTaskKeys
+                    )
+                }
+
+                res.addOnCompleteListener {
+                    for (i in 0..it.getResult().documents.size - 1) {
+                        val doc = res.getResult().documents.get(i).data
+                        val model = TaskModel(
+                            title = doc!!.get("title").toString(),
+                            isCompleted = doc.get("completed") as Boolean,
+                            user_id = doc.get("user_id").toString(),
+                            note = doc.get("note").toString(),
+                            uid = res.getResult().documents.get(i).id,
+                            list_id = doc.get("list_id").toString()
+                        )
+                        userTasks.add(model)
+                    }
+                    Log.i(
+                        "----------------------------------------------------------------",
+                        "User tasks are changed, new size are: " + tasksLiveData.value?.size.toString()
+                    )
+                }
             }
+
+            tasksLiveData.value = userTasks
+
             Log.i(
                 "----------------------------------------------------------------",
-                "User tasks are changed, new size are: " + tasksLiveData.value?.size.toString()
+                "Query Finished"
             )
         }
-
-        tasksLiveData.value = userTasks
-
-        Log.i("----------------------------------------------------------------", "Query Finished")
-
-        return res
+        return temp
     }
 
     override fun getTasksFromStorage(): ArrayList<TaskModel> {

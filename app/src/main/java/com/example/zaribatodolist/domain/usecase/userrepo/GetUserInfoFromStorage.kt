@@ -5,8 +5,8 @@ import com.example.zaribatodolist.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetUserInfoFromStorage @Inject constructor(private val userRepository: UserRepository) {
-    fun invoke() : User? {
-        return userRepository.currentUser
-    }
+//    fun invoke() : User? {
+//        return userRepository.currentUser
+//    }
 }
 

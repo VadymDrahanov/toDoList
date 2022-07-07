@@ -1,5 +1,6 @@
 package com.example.zaribatodolist.presentation.navigationMenu
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -47,18 +48,18 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
         tasksRv = binding.tasksRv
 
         //search observer
-        viewModel.tasksLiveData.observe(viewLifecycleOwner, {
+        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
             val customAdapter =
                 TasksAdapter(
                     it,
                     { id -> onListItemClick(id) },
                     { task -> onCardViewClick(task) },
-                    {task -> onCardViewLongClick(task)})
+                    { task -> onCardViewLongClick(task) })
             tasksRv.adapter = customAdapter
-        })
+        }
 
         //ui state observer
-        viewModel.uistate.observe(viewLifecycleOwner, {
+        viewModel.uistate.observe(viewLifecycleOwner) {
             when (it.isSearching) {
                 false -> {
                     binding.tasksRv.visibility = View.GONE
@@ -70,13 +71,13 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
                     binding.layout.visibility = View.GONE
                 }
             }
-        })
+        }
 
-        viewModel.listsLiveData.observe(viewLifecycleOwner, {
+        viewModel.listsLiveData.observe(viewLifecycleOwner) {
             val customAdapter = CollectionRVAdapter(it, { id -> onViewClick(id) })
             binding.collectionRV.layoutManager = LinearLayoutManager(context)
             binding.collectionRV.adapter = customAdapter
-        })
+        }
 
         binding.goToTasksLayout.setOnClickListener {
             viewModel.handleListItemClick("main")
@@ -101,6 +102,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
     private fun onCardViewLongClick(id: TaskModel) {
         //do nothing
     }
+
     private fun onCardViewClick(task: TaskModel) {
         Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
         //viewModel.handleCheckBoxClick(id)

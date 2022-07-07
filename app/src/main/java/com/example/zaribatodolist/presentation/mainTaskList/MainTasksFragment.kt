@@ -1,10 +1,12 @@
 package com.example.zaribatodolist.presentation.mainTaskList
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,9 +18,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
+import com.example.zaribatodolist.databinding.FragmentDialogBinding
 import com.example.zaribatodolist.databinding.FragmentTasksMainBinding
+import com.example.zaribatodolist.presentation.dialog.AlertDialogConfiguration
+import com.example.zaribatodolist.presentation.dialog.CustomAlertDialog
 import com.example.zaribatodolist.presentation.sharedViewModel.SharedViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 
 @AndroidEntryPoint
 class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
@@ -57,17 +63,38 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
                 viewModel.removeTasks(listOfSelectedItems)
                 listOfSelectedItems.clear()
             }
+            if (it.itemId == R.id.shareTaskButton) {
+                launchCustomAlertDialog()
+            }
             true
         }
 
         shareModel.selectedItem.observe(viewLifecycleOwner, Observer<ArrayList<TaskModel>> {
             listOfSelectedItems = it
-            Log.d("TAG", it.size.toString())
         })
+
+
+        viewModel.uistate.observe(viewLifecycleOwner) {
+            when {
+                it.isShareProcess -> {
+                    launchCustomAlertDialog()
+                }
+            }
+        }
 
         return view
     }
+    lateinit var dialog : CustomAlertDialog
+    private fun launchCustomAlertDialog() {
+        dialog = CustomAlertDialog(requireContext()) { onPositiveDialogButtonClick() }
+        dialog.show()
 
+    }
+
+    private fun onPositiveDialogButtonClick() {
+        Log.i("Caller", "i am here")
+        viewModel.handleOnShareButtonClick(dialog.getTextFieldResult(), listOfSelectedItems.map { it.uid } as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */)
+    }
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
