@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -28,6 +30,8 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
     private val shareModel: SharedViewModel by activityViewModels()
     private var listOfSelectedItems = ArrayList<TaskModel>()
 
+
+    lateinit var dialog: CustomAlertDialogWithTextField
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +65,9 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
             if (it.itemId == R.id.shareTaskButton) {
                 launchCustomAlertDialog()
             }
+
+
+
             true
         }
 
@@ -71,8 +78,17 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
 
         viewModel.uistate.observe(viewLifecycleOwner) {
             when {
-                it.isShareProcess -> {
-                    launchCustomAlertDialog()
+                it.shareSuccess -> {
+                    dialog.dismiss()
+                }
+                it.shareWentWrong -> {
+                    Toast.makeText(requireContext(), "Something went wrong, try again", Toast.LENGTH_SHORT).show()
+                }
+                it.isProcess -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+               !it.isProcess -> {
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -80,10 +96,11 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         return view
     }
 
-    lateinit var dialog: CustomAlertDialogWithTextField
+
     private fun launchCustomAlertDialog() {
         dialog = CustomAlertDialogWithTextField(requireContext())
-
+        dialog.create()
+        dialog.getWindow()?.setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.setOnPositiveBtnClickListener {
             Log.i("Caller", "i am here")
             viewModel.handleOnShareButtonClick(

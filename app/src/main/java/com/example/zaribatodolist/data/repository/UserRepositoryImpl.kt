@@ -8,7 +8,9 @@ import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -46,30 +48,44 @@ class UserRepositoryImpl() : UserRepository {
 
     override fun addNewTask(taskID: String) {
         val tasks = userLiveData.value?.tasks
-        Log.i("tag", "in use case")
         tasks?.add(taskID)
         userLiveData.value?.uid?.let {
             Firebase.firestore.collection("users").document(it).update("tasks", tasks)
         }
-
     }
 
+    fun shareNewTask(taskID: String, email: String) {
+        val tasks = userLiveData.value?.tasks
+        tasks?.add(taskID)
+        userLiveData.value?.uid?.let {
+            Firebase.firestore.collection("users").document(it).update("tasks", tasks)
+        }
+    }
 
-    override fun shareTask(gmail: String, listOfTasks: ArrayList<String>) {
-        Firebase.firestore.collection("users").whereEqualTo("email", gmail)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    for (i in 0..listOfTasks.size - 1) {
-                        addNewTask(listOfTasks.get(i))
+    override suspend fun shareTask(
+        gmail: String,
+        listOfTasks: ArrayList<String>
+    ): Task<QuerySnapshot> {
+        val res = Firebase.firestore.collection("users").whereEqualTo("email", gmail).get()
+            .addOnCompleteListener {
+                when {
+                    it.isSuccessful -> {
+                        if (!it.result.documents.isEmpty()) {
+                            val recipientID = it.result.documents[0].id
+                            val recipientRef =
+                                Firebase.firestore.collection("users").document(recipientID)
+                            Log.i("ERROR_SERVICE", it.result.documents[0].id)
+                            for (i in 0 until listOfTasks.size) {
+                                recipientRef.update(
+                                    "tasks",
+                                    FieldValue.arrayUnion(listOfTasks.get(i))
+                                )
+                            }
+                        }
                     }
-                    Log.d(TAG, "${document.id} => ${document.data}")
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-
+        return res
     }
 
     override suspend fun createUser(user: User): Task<Void>? {

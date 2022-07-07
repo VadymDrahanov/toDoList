@@ -12,7 +12,7 @@
     app:contentPaddingLeft="20dp"
     app:contentPaddingRight="20dp"
     app:contentPaddingTop="10dp"
-    tools:context=".presentation.dialog.DialogFragment"
+    tools:context=".presentation.mainTaskList.MainTasksFragment"
     tools:layout_editor_absoluteX="10dp"
     tools:layout_editor_absoluteY="10dp">
 
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Type here" />

@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 interface UserRepository {
     suspend fun sendGetUserRequest(id: String): Task<DocumentSnapshot>?
@@ -13,5 +14,5 @@ interface UserRepository {
     suspend fun createUser(user: User): Task<Void>?
     val userLiveData: MutableLiveData<User>
     fun addNewTask(taskID: String)
-    fun shareTask(gmail: String, listOfTasks: ArrayList<String>)
+    suspend fun shareTask(gmail: String, listOfTasks: ArrayList<String>) : Task<QuerySnapshot>
 }
