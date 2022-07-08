@@ -1,22 +1,31 @@
 package com.example.zaribatodolist.presentation.navigationMenu
 
+import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
+import com.example.zaribatodolist.databinding.FragmentDialogBinding
 import com.example.zaribatodolist.databinding.FragmentNavigationMenuBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.example.zaribatodolist.presentation.dialog.CustomAlertDialogWithTextField
+import com.example.zaribatodolist.presentation.dialog.CustomDialog
 import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
@@ -110,26 +119,52 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
 
     }
 
-    lateinit var dialog: CustomAlertDialogWithTextField
+//    lateinit var dialog: CustomAlertDialogWithTextField
 
     private fun launchCustomAlertDialog() {
-        dialog = CustomAlertDialogWithTextField(requireContext())
-        dialog.setTitle("New List")
+//        dialog = CustomAlertDialogWithTextField(requireContext())
+//        dialog.create()
+//        dialog.setTitle("New List")
+//
+//
+//
+//        dialog.setOnPositiveBtnClickListener {
+//            val title: String = dialog.getTextFieldResult()
+//            if (!title.isBlank() || title != " ") {
+//                viewModel.handleAddNewList(
+//                    title,
+//                    FirebaseAuth.getInstance().currentUser!!.uid.toString()
+//                )
+//            }
+//        }
+//
+//        dialog.show()
+//        val dialog = CustomAlertDialogWithTextField.MBuilder(requireContext())
+//
+//
+//        val view = layoutInflater.inflate(R.layout.fragment_dialog,null)
+//        dialog.create()
+//        val d = dialog.setView(view)
+//
+//        d.setPositiveButton("text") { it, i ->
+//
+//        }
+//
+//        dialog.show()
 
-
-
+        val dialog = CustomDialog(requireContext())
         dialog.setOnPositiveBtnClickListener {
-            val title: String = dialog.getTextFieldResult()
-            if (!title.isBlank() || title != " ") {
+            if (!it.isBlank() || it != " ") {
+
                 viewModel.handleAddNewList(
-                    title,
+                    it,
                     FirebaseAuth.getInstance().currentUser!!.uid.toString()
                 )
             }
         }
 
-        dialog.show()
 
+        dialog.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
