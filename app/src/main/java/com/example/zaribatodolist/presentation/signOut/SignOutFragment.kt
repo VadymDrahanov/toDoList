@@ -53,7 +53,7 @@ class SignOutFragment : BaseFragment<FragmentSignOutBinding>() {
                 activity?.startActivity(intent)
             }
         }
-        viewModel.uistate.observe(viewLifecycleOwner, stateObserver)
+        viewModel.uiState.observe(viewLifecycleOwner, stateObserver)
 
         binding.signOutButton.setOnClickListener {
             viewModel.signOut()

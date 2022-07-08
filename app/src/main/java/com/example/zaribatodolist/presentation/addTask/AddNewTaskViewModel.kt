@@ -31,16 +31,16 @@ class AddNewTaskViewModel @Inject constructor(
                     list_id = list_id
                 )
             ).addOnCompleteListener {
-                uistate.value = AddNewTaskUIState(true)
+                uiState.value = AddNewTaskUIState(true)
                 Log.i("Success", "Task was written")
-                uistate.value = AddNewTaskUIState(false)
+                uiState.value = AddNewTaskUIState(false)
                 when {
                     it.isSuccessful -> {
                         addNewTaskUseCaseToUserDocument.invoke(it.getResult().id)
-                        uistate.value = AddNewTaskUIState(true)
+                        uiState.value = AddNewTaskUIState(true)
                         Log.i("Success", "Task was written")
 
-                        uistate.value = AddNewTaskUIState(false)
+                        uiState.value = AddNewTaskUIState(false)
                     }
                     it.isCanceled -> {
                         Log.i("Error", "Something went wrong")

@@ -38,17 +38,23 @@ class CompletedTasksFragment : BaseFragment<FragmentComletedTasksBinding>() {
 
         binding.tasksRv.adapter = adapter
 
-        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
-            viewModel.handleDataChanged()
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            if (it.isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.INVISIBLE
+                adapter.bindList(it.taskList)
+            }
         }
 
-        viewModel.uistate.observe(viewLifecycleOwner) {
-            adapter.bindList(it.taskList!!)
-        }
+        viewModel.bindObservable()
 
-        viewModel.listLiveData.observe(viewLifecycleOwner) {
-            viewModel.handleDataChanged()
-        }
+        //        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
+//            viewModel.handleDataChanged()
+//        }
+//        viewModel.listLiveData.observe(viewLifecycleOwner) {
+//            viewModel.handleDataChanged()
+//        }
 
         return view
     }

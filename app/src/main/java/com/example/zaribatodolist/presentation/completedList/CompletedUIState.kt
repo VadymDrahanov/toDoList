@@ -6,7 +6,5 @@ import com.example.zaribatodolist.presentation.base.UIState
 data class CompletedUIState (
     val isLoading: Boolean = true,
     val isError: Boolean = false,
-
-    val taskList: ArrayList<TaskModel>? = ArrayList()
-
+    val taskList: List<TaskModel> = emptyList()
 ) : UIState

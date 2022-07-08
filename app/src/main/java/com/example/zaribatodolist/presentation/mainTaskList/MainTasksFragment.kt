@@ -77,7 +77,7 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
         })
 
 
-        viewModel.uistate.observe(viewLifecycleOwner) {
+        viewModel.uiState.observe(viewLifecycleOwner) {
             when {
                 it.shareSuccess -> {
                     dialog.dismiss()

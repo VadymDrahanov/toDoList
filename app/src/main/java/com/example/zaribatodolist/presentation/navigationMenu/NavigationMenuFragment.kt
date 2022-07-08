@@ -65,7 +65,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
         }
 
         //ui state observer
-        viewModel.uistate.observe(viewLifecycleOwner) {
+        viewModel.uiState.observe(viewLifecycleOwner) {
             when (it.isSearching) {
                 false -> {
                     binding.tasksRv.visibility = View.GONE
