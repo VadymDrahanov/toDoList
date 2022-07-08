@@ -24,29 +24,29 @@ class MainTasksViewModel @Inject constructor(
     fun handleOnShareButtonClick(gmail: String, listOfTasks: ArrayList<String>) {
         val isValid =isValidDataForShare.invoke(gmail.trim(), listOfTasks)
         if(!isValid){
-            uistate.value = MainTaskViewUIState(shareWentWrong = true)
-            uistate.value = MainTaskViewUIState(shareWentWrong = false)
+            uiState.value = MainTaskViewUIState(shareWentWrong = true)
+            uiState.value = MainTaskViewUIState(shareWentWrong = false)
             return
         }
         viewModelScope.launch {
 
-            uistate.value = MainTaskViewUIState(isProcess = true)
+            uiState.value = MainTaskViewUIState(isProcess = true)
             shareTasksUseCase.invoke(gmail, listOfTasks).addOnCompleteListener {
-                uistate.value = MainTaskViewUIState(isProcess = false)
+                uiState.value = MainTaskViewUIState(isProcess = false)
                 when {
                     it.isSuccessful -> {
                         if(it.getResult().isEmpty){
-                            uistate.value = MainTaskViewUIState(shareWentWrong = true)
-                            uistate.value = MainTaskViewUIState(shareWentWrong = false)
+                            uiState.value = MainTaskViewUIState(shareWentWrong = true)
+                            uiState.value = MainTaskViewUIState(shareWentWrong = false)
                         }else{
-                            uistate.value = MainTaskViewUIState(shareSuccess = true)
-                            uistate.value = MainTaskViewUIState(shareSuccess = false)
+                            uiState.value = MainTaskViewUIState(shareSuccess = true)
+                            uiState.value = MainTaskViewUIState(shareSuccess = false)
                         }
 
                     }
                     it.isCanceled -> {
-                        uistate.value = MainTaskViewUIState(shareWentWrong = true)
-                        uistate.value = MainTaskViewUIState(shareWentWrong = false)
+                        uiState.value = MainTaskViewUIState(shareWentWrong = true)
+                        uiState.value = MainTaskViewUIState(shareWentWrong = false)
                     }
                 }
             }

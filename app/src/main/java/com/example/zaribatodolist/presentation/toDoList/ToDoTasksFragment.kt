@@ -51,7 +51,7 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
             viewModel.handleListChange()
         }
 
-        viewModel.uistate.observe(viewLifecycleOwner) {
+        viewModel.uiState.observe(viewLifecycleOwner) {
             adapter.bindList(it.taskList!!)
         }
         binding.addBtn.setOnLongClickListener() {

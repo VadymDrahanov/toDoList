@@ -32,7 +32,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun firebaseAuthWithGoogle(idToken: String) {
-        uistate.value = AuthUIState(true, false)
+        uiState.value = AuthUIState(true, false)
 
         viewModelScope.launch {
             try {
@@ -49,7 +49,7 @@ class AuthViewModel @Inject constructor(
                             }
                         }
                         it.isCanceled -> {
-                            uistate.value = AuthUIState(false, false)
+                            uiState.value = AuthUIState(false, false)
                             Log.i("Error", "Something went wrong")
                         }
                     }
@@ -77,10 +77,10 @@ class AuthViewModel @Inject constructor(
                             viewModelScope.launch {
                                 getUserInfoUseCase.invoke(firebaseUser.uid)
                             }
-                            uistate.value = AuthUIState(false, true)
+                            uiState.value = AuthUIState(false, true)
                         }
                         task.isCanceled -> {
-                            uistate.value = AuthUIState(false, false)
+                            uiState.value = AuthUIState(false, false)
                             Log.i("Error", "Something went wrong")
                         }
                     }
@@ -93,7 +93,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getUserInfo(uid: String) {
-        uistate.value = AuthUIState(true, false)
+        uiState.value = AuthUIState(true, false)
 
         viewModelScope.launch {
             getUserTasksUseCase.invoke(uid).addOnCompleteListener {
@@ -104,10 +104,10 @@ class AuthViewModel @Inject constructor(
                             getListsUseCase.invoke(uid).addOnCompleteListener { list_query ->
                                 when {
                                     list_query.isSuccessful -> {
-                                        uistate.value = AuthUIState(false, true)
+                                        uiState.value = AuthUIState(false, true)
                                     }
                                     list_query.isCanceled -> {
-                                        uistate.value = AuthUIState(false, false)
+                                        uiState.value = AuthUIState(false, false)
                                         Log.i("Error", "Something went wrong")
                                     }
                                 }
@@ -115,7 +115,7 @@ class AuthViewModel @Inject constructor(
                         }
                     }
                     it.isCanceled -> {
-                        uistate.value = AuthUIState(false, false)
+                        uiState.value = AuthUIState(false, false)
                         Log.i("Error", "Something went wrong")
                     }
                 }
@@ -126,7 +126,7 @@ class AuthViewModel @Inject constructor(
                         Log.i("Error", "All Okey")
                     }
                     getUser.isCanceled -> {
-                        uistate.value = AuthUIState(false, false)
+                        uiState.value = AuthUIState(false, false)
                         Log.i("Error", "Something went wrong")
                     }
                 }

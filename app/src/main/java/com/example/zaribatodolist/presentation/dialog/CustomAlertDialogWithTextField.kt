@@ -54,7 +54,8 @@ class CustomAlertDialogWithTextField(context: Context) :
     }
 
     fun getTextFieldResult(): String {
-        return binding.textInputLayout.text.toString()
+        //return binding.textInputLayout.text.toString()
+        return "hahah"
     }
 
 }

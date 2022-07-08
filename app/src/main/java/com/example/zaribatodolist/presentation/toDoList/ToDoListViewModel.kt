@@ -38,7 +38,7 @@ class ToDoListViewModel @Inject constructor(
 
     fun handleListChange() {
         //handleListChange()
-        uistate.value =
+        uiState.value =
             ToDoListUIState(taskList = tasksLiveData.value?.let {
                 currentList.value?.let { it1 ->
                     filterTaskByListUseCase.invoke(

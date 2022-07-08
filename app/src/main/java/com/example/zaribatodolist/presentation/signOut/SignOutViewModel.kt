@@ -25,6 +25,6 @@ class SignOutViewModel @Inject constructor(
 
     fun signOut() {
         signOutUseCase.invoke()
-        uistate.value = SignOutUIState(true, true)
+        uiState.value = SignOutUIState(true, true)
     }
 }

@@ -5,12 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TaskModel(
-    val title: String,
-    val isCompleted: Boolean,
-    val user_id: String,
-    val uid: String,
+    val title: String = "",
+    val isCompleted: Boolean = false,
+    val user_id: String = "",
+    var uid: String = "",
     val note: String = "",
-    val list_id: String,
+    val list_id: String = "",
     var isSelected: Boolean = false
-) :
-    Parcelable
+) : Parcelable

@@ -4,23 +4,62 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.data.model.TaskModel
-import com.google.android.gms.tasks.Task
-
 import com.example.zaribatodolist.domain.repository.TaskRepository
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldPath.documentId
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 
-class TasksRepositoryImpl : TaskRepository {
+class TasksRepositoryImpl(
+    private val fireStore: FirebaseFirestore
+) : TaskRepository {
     private val TAG = "Query TAG"
 
     private var db = Firebase.firestore
 
     var userTasks: ArrayList<TaskModel> = ArrayList()
     override val tasksLiveData: MutableLiveData<ArrayList<TaskModel>> = MutableLiveData()
+
+    override fun getTasks1(userId: String): Flow<MutableList<TaskModel>> = callbackFlow {
+        var eventsCollection: Query? = null
+        try {
+            eventsCollection = fireStore.collection("tasks").whereEqualTo("user_id", userId)
+        } catch (e: Throwable) {
+            close(e)
+        }
+        val listener = eventsCollection?.addSnapshotListener { snapshot, _ ->
+            if (snapshot == null) return@addSnapshotListener
+
+            try {
+                val list = mutableListOf<TaskModel>()
+
+                snapshot.documents.forEach {
+                    val model = it.toObject(TaskModel::class.java)
+                    model?.uid = it.id
+
+                    if (model != null) {
+                        list.add(model)
+                    }
+                }
+
+                trySend(list)
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+
+        awaitClose {
+            listener?.remove()
+        }
+    }
 
     override suspend fun addTask(task: SaveTaskParam): Task<DocumentReference> {
         return db.collection("tasks").add(task).addOnCompleteListener {

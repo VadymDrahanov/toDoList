@@ -11,7 +11,7 @@ import com.example.zaribatodolist.data.model.TaskModel
 
 
 class TasksAdapter(
-    private var tasks: ArrayList<TaskModel>,
+    private var tasks: List<TaskModel>,
     private val onCheckBoxClick: (id: String) -> Unit,
     private val onCardViewClick: (task: TaskModel) -> Unit,
     private val onCardViewLongClick: (id: TaskModel) -> Unit
@@ -52,7 +52,7 @@ class TasksAdapter(
         }
     }
 
-    fun bindList(list: ArrayList<TaskModel>) {
+    fun bindList(list: List<TaskModel>) {
         tasks = list
         notifyDataSetChanged()
     }

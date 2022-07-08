@@ -7,10 +7,13 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
 
     val tasksLiveData: MutableLiveData<ArrayList<TaskModel>>
+
+    fun getTasks1(userId: String): Flow<MutableList<TaskModel>>
 
     suspend fun addTask(task: SaveTaskParam): Task<DocumentReference>
     suspend fun getTasks(uid: String): Task<QuerySnapshot>

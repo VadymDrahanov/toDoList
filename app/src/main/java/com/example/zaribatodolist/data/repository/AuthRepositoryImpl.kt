@@ -2,17 +2,12 @@ package com.example.zaribatodolist.data.repository
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.example.zaribatodolist.R
-
 import com.example.zaribatodolist.domain.repository.AuthRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -22,7 +17,7 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
     private var auth: FirebaseAuth = Firebase.auth
 
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(context.getString(R.string.default_web_client_id))
+        .requestIdToken("655849864476-20ebecto6j0la62mvh5fhvj7dq4m8cpf.apps.googleusercontent.com")
         .requestEmail()
         .build()
 
@@ -45,10 +40,6 @@ class AuthRepositoryImpl(private val context: Context) : AuthRepository {
         Firebase.auth.signOut()
     }
 
-    override fun getSignInStatus(): Boolean {
-        if(auth.currentUser != null){
-            return true
-        }else return false
-    }
+    override fun getSignInStatus(): Boolean = auth.currentUser != null
 
 }

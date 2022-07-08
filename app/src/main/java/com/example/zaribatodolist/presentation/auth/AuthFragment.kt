@@ -46,7 +46,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 binding.signInWithGoogleBtn.isClickable = false
             }
         }
-        viewModel.uistate.observe(viewLifecycleOwner, stateObserver)
+        viewModel.uiState.observe(viewLifecycleOwner, stateObserver)
         /////////////////////////////////////////////////////////////////
 
 

@@ -1,6 +1,5 @@
 package com.example.zaribatodolist.presentation.navigationMenu
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.zaribatodolist.data.model.ListModel
@@ -11,7 +10,6 @@ import com.example.zaribatodolist.domain.usecase.listrepo.ObserveListsUseCase
 import com.example.zaribatodolist.domain.usecase.listrepo.SetCurrentListUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.ObservAndFilterTasksUseCase
 import com.example.zaribatodolist.presentation.base.BaseViewModel
-import com.example.zaribatodolist.presentation.base.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,12 +27,12 @@ class NavigationMenuViewModel @Inject constructor(
     val listsLiveData: LiveData<ArrayList<ListModel>> = listsObserveListsUseCase.userLists
 
     fun handleSearch(query: String?) {
-        uistate.value = NavigationMenuUIState(true)
+        uiState.value = NavigationMenuUIState(true)
         tasksObserverUseCase.invoke(query)
     }
 
     fun searchClosed() {
-        uistate.value = NavigationMenuUIState(false)
+        uiState.value = NavigationMenuUIState(false)
     }
 
     fun handleAddNewList(listTitle: String, user_id: String) {

@@ -93,7 +93,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
             )
         }
 
-        viewModel.uistate.observe(viewLifecycleOwner, {
+        viewModel.uiState.observe(viewLifecycleOwner, {
             when {
                 it.isCompleted -> {
                     binding.titleEditText.text.clear()
