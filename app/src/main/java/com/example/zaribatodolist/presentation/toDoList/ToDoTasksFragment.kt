@@ -65,7 +65,7 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         viewModel.bindObservable()
 
         binding.addBtn.setOnLongClickListener() {
-            viewModel.addTask(generateTaskModel())
+            //viewModel.addTask(generateTaskModel())
             //Toast.makeText(requireContext(), "Msg", Toast.LENGTH_SHORT).show()
             true
         }
@@ -77,21 +77,7 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
         return myView
     }
 
-    private fun generateTaskModel() = TaskModel(
-        title = getRandomString(10),
-        isCompleted = false,
-        user_id = Firebase.auth.currentUser?.uid ?: "",
-        uid = getRandomString(9),
-        note = getRandomString(100),
-        isSelected = false
-    )
 
-    fun getRandomString(length: Int): String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
-    }
 
     private fun onCheckBoxListItemClick(id: String) {
         viewModel.handleCheckBoxClick(id)
