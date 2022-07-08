@@ -20,6 +20,7 @@ import com.example.zaribatodolist.R
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentTasksMainBinding
 import com.example.zaribatodolist.presentation.dialog.CustomAlertDialogWithTextField
+import com.example.zaribatodolist.presentation.dialog.CustomDialog
 import com.example.zaribatodolist.presentation.sharedViewModel.SharedViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -31,7 +32,7 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
     private var listOfSelectedItems = ArrayList<TaskModel>()
 
 
-    lateinit var dialog: CustomAlertDialogWithTextField
+    lateinit var dialog: CustomDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,19 +99,34 @@ class MainTasksFragment : BaseFragment<FragmentTasksMainBinding>() {
 
 
     private fun launchCustomAlertDialog() {
-        dialog = CustomAlertDialogWithTextField(requireContext())
-        dialog.create()
-        dialog.getWindow()?.setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//        dialog = CustomAlertDialogWithTextField(requireContext())
+//        dialog.create()
+//        dialog.getWindow()?.setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//        dialog.setOnPositiveBtnClickListener {
+//            Log.i("Caller", "i am here")
+//            viewModel.handleOnShareButtonClick(
+//                dialog.getTextFieldResult(),
+//                listOfSelectedItems.map { it.uid } as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */)
+//        }
+//
+//        dialog.setButtonText("Share")
+//
+//        dialog.show()
+
+        dialog = CustomDialog(requireContext())
         dialog.setOnPositiveBtnClickListener {
-            Log.i("Caller", "i am here")
-            viewModel.handleOnShareButtonClick(
-                dialog.getTextFieldResult(),
-                listOfSelectedItems.map { it.uid } as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */)
+            if (!it.isBlank() || it != " ") {
+
+
+                viewModel.handleOnShareButtonClick(
+                    it,
+                    listOfSelectedItems.map { it.uid } as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */)
+            }
         }
 
-        dialog.setButtonText("Share")
 
         dialog.show()
+
 
     }
 

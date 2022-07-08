@@ -14,6 +14,7 @@ import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.databinding.FragmentNavigationMenuBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.example.zaribatodolist.presentation.dialog.CustomAlertDialogWithTextField
+import com.example.zaribatodolist.presentation.dialog.CustomDialog
 import com.example.zaribatodolist.presentation.toDoList.TasksAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -110,26 +111,50 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
 
     }
 
-    lateinit var dialog: CustomAlertDialogWithTextField
-
     private fun launchCustomAlertDialog() {
-        dialog = CustomAlertDialogWithTextField(requireContext())
-        dialog.setTitle("New List")
+//        dialog = CustomAlertDialogWithTextField(requireContext())
+//        dialog.create()
+//        dialog.setTitle("New List")
+//
+//
+//
+//        dialog.setOnPositiveBtnClickListener {
+//            val title: String = dialog.getTextFieldResult()
+//            if (!title.isBlank() || title != " ") {
+//                viewModel.handleAddNewList(
+//                    title,
+//                    FirebaseAuth.getInstance().currentUser!!.uid.toString()
+//                )
+//            }
+//        }
+//
+//        dialog.show()
+//        val dialog = CustomAlertDialogWithTextField.MBuilder(requireContext())
+//
+//
+//        val view = layoutInflater.inflate(R.layout.fragment_dialog,null)
+//        dialog.create()
+//        val d = dialog.setView(view)
+//
+//        d.setPositiveButton("text") { it, i ->
+//
+//        }
+//
+//        dialog.show()
 
-
-
+        val dialog = CustomDialog(requireContext())
         dialog.setOnPositiveBtnClickListener {
-            val title: String = dialog.getTextFieldResult()
-            if (!title.isBlank() || title != " ") {
+            if (!it.isBlank() || it != " ") {
+
                 viewModel.handleAddNewList(
-                    title,
+                    it,
                     FirebaseAuth.getInstance().currentUser!!.uid.toString()
                 )
             }
         }
 
-        dialog.show()
 
+        dialog.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

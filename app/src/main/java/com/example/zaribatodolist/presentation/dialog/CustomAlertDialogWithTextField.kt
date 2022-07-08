@@ -1,5 +1,6 @@
 package com.example.zaribatodolist.presentation.dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -58,4 +59,30 @@ class CustomAlertDialogWithTextField(context: Context) :
         return "hahah"
     }
 
+}
+
+class CustomDialog(context: Context) : Dialog(context) {
+
+    private lateinit var onPositiveButtonClick: (text: String) -> Unit
+    private lateinit var binding: FragmentDialogBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentDialogBinding.inflate(layoutInflater)
+
+        setContentView(binding.root);
+
+        //val btn = this.findViewById<Button>(R.id.add)
+        binding.addListBtn.setOnClickListener {
+            onPositiveButtonClick(binding.textInputLayout.editText!!.text.toString())
+        }
+
+        binding.cancelBtn.setOnClickListener{
+            dismiss()
+        }
+    }
+
+    fun setOnPositiveBtnClickListener(click: (text: String) -> Unit) {
+        onPositiveButtonClick = click
+    }
 }
