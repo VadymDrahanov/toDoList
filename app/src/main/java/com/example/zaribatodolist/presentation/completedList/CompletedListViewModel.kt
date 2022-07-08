@@ -7,6 +7,8 @@ import com.example.zaribatodolist.domain.usecase.listrepo.ObserveCurrentListUseC
 import com.example.zaribatodolist.domain.usecase.logic.FilterTaskByListUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.ObservTasksUseCase
 import com.example.zaribatodolist.domain.usecase.tasks.GetTasksObservableUseCase
+import com.example.zaribatodolist.domain.usecase.tasks.GetTasksParams
+import com.example.zaribatodolist.domain.usecase.tasks.TaskCompletionState
 import com.example.zaribatodolist.presentation.base.BaseViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -27,24 +29,28 @@ class CompletedListViewModel @Inject constructor(
     val listLiveData: LiveData<String> = listObserveUseCase.currentLists
 
     fun bindObservable() = viewModelScope.launch {
-        getTasksObservableUseCase.invoke(Firebase.auth.currentUser?.uid ?: "")
-            .collect {
-                if (it.isNotEmpty()) {
-                    val newState = CompletedUIState(
-                        isLoading = false,
-                        isError = false,
-                        taskList = it
-                    )
-                    uiState.value = newState
-                } else {
-                    val newState = CompletedUIState(
-                        isLoading = false,
-                        isError = false,
-                        taskList = it
-                    )
-                    uiState.value = newState
-                }
+        getTasksObservableUseCase.invoke(
+            GetTasksParams(
+                userId = Firebase.auth.currentUser?.uid ?: "",
+                completionState = TaskCompletionState.COMPLETED
+            )
+        ).collect {
+            if (it.isNotEmpty()) {
+                val newState = CompletedUIState(
+                    isLoading = false,
+                    isError = false,
+                    taskList = it
+                )
+                uiState.value = newState
+            } else {
+                val newState = CompletedUIState(
+                    isLoading = false,
+                    isError = false,
+                    taskList = it
+                )
+                uiState.value = newState
             }
+        }
     }
 
 //    fun handleDataChanged() {

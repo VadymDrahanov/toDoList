@@ -35,6 +35,7 @@
         <entry key="app/src/main/res/layout/fragment_auth.xml" value="0.396875" />
         <entry key="app/src/main/res/layout/fragment_comleted_tasks.xml" value="0.32651367187499997" />
         <entry key="app/src/main/res/layout/fragment_sign_out.xml" value="0.396875" />
+        <entry key="app/src/main/res/layout/fragment_todo_tasks.xml" value="0.31007751937984496" />
       </map>
     </option>
   </component>

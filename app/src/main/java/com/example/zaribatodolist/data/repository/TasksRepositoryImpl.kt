@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.data.model.TaskModel
 import com.example.zaribatodolist.domain.repository.TaskRepository
+import com.example.zaribatodolist.domain.usecase.tasks.GetTasksParams
+import com.example.zaribatodolist.domain.usecase.tasks.TaskCompletionState
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldPath.documentId
@@ -28,10 +30,28 @@ class TasksRepositoryImpl(
     var userTasks: ArrayList<TaskModel> = ArrayList()
     override val tasksLiveData: MutableLiveData<ArrayList<TaskModel>> = MutableLiveData()
 
-    override fun getTasks1(userId: String): Flow<MutableList<TaskModel>> = callbackFlow {
+    override fun getTasks1(params: GetTasksParams): Flow<MutableList<TaskModel>> = callbackFlow {
         var eventsCollection: Query? = null
         try {
-            eventsCollection = fireStore.collection("tasks").whereEqualTo("user_id", userId)
+            eventsCollection = when (params.completionState) {
+                TaskCompletionState.COMPLETED -> {
+                    fireStore
+                        .collection("tasks")
+                        .whereEqualTo("user_id", params.userId)
+                        .whereEqualTo("completed", true)
+                }
+                TaskCompletionState.NOT_COMPLETED -> {
+                    fireStore
+                        .collection("tasks")
+                        .whereEqualTo("user_id", params.userId)
+                        .whereEqualTo("completed", false)
+                }
+                else -> {
+                    fireStore
+                        .collection("tasks")
+                        .whereEqualTo("user_id", params.userId)
+                }
+            }
         } catch (e: Throwable) {
             close(e)
         }
@@ -59,6 +79,13 @@ class TasksRepositoryImpl(
         awaitClose {
             listener?.remove()
         }
+    }
+
+    override fun addTask(task: TaskModel) {
+        //fireStore.collection("tasks").add(task)
+        fireStore.collection("tasks")
+            .document(task.uid)
+            .set(task)
     }
 
     override suspend fun addTask(task: SaveTaskParam): Task<DocumentReference> {

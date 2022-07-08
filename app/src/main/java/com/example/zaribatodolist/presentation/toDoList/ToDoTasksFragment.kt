@@ -14,6 +14,8 @@ import com.example.zaribatodolist.presentation.addTask.AddTaskFragment
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import com.example.zaribatodolist.presentation.mainTaskList.MainTasksFragmentDirections
 import com.example.zaribatodolist.presentation.sharedViewModel.SharedViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +37,7 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
 
         binding.addBtn.setOnClickListener {
             val addTaskFragment = AddTaskFragment()
-            addTaskFragment.show(activity!!.supportFragmentManager, "Add New Task")
+            addTaskFragment.show(requireActivity().supportFragmentManager, "Add New Task")
         }
 
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
@@ -46,24 +48,49 @@ class ToDoTasksFragment : BaseFragment<FragmentTodoTasksBinding>() {
 
         binding.tasksRv.adapter = adapter
 
-        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
-            //Toast.makeText(requireContext(), "I am here", Toast.LENGTH_SHORT).show()
-            viewModel.handleListChange()
-        }
+//        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
+//            //Toast.makeText(requireContext(), "I am here", Toast.LENGTH_SHORT).show()
+//            viewModel.handleListChange()
+//        }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
-            adapter.bindList(it.taskList!!)
+            if (it.isLoading) {
+                //binding.progressBar.visibility = View.VISIBLE
+            } else {
+                //binding.progressBar.visibility = View.INVISIBLE
+                adapter.bindList(it.taskList)
+            }
         }
+
+        viewModel.bindObservable()
+
         binding.addBtn.setOnLongClickListener() {
+            viewModel.addTask(generateTaskModel())
             //Toast.makeText(requireContext(), "Msg", Toast.LENGTH_SHORT).show()
             true
         }
 
-        viewModel.currentList.observe(viewLifecycleOwner) {
-            viewModel.handleListChange()
-        }
+//        viewModel.currentList.observe(viewLifecycleOwner) {
+//            viewModel.handleListChange()
+//        }
 
         return myView
+    }
+
+    private fun generateTaskModel() = TaskModel(
+        title = getRandomString(10),
+        isCompleted = false,
+        user_id = Firebase.auth.currentUser?.uid ?: "",
+        uid = getRandomString(9),
+        note = getRandomString(100),
+        isSelected = false
+    )
+
+    fun getRandomString(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 
     private fun onCheckBoxListItemClick(id: String) {

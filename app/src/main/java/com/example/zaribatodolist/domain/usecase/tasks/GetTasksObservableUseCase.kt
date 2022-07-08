@@ -8,5 +8,16 @@ import javax.inject.Inject
 class GetTasksObservableUseCase @Inject constructor(
     private val taskRepository: TaskRepository
 ) {
-    fun invoke(userId: String): Flow<List<TaskModel>> = taskRepository.getTasks1(userId)
+    fun invoke(param: GetTasksParams): Flow<List<TaskModel>> = taskRepository.getTasks1(param)
+}
+
+data class GetTasksParams(
+    val userId: String,
+    val completionState: TaskCompletionState
+)
+
+enum class TaskCompletionState {
+    COMPLETED,
+    NOT_COMPLETED,
+    ALL
 }
