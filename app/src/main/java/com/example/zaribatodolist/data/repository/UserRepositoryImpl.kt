@@ -1,6 +1,5 @@
 package com.example.zaribatodolist.data.repository
 
-import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +7,8 @@ import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.UserRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -54,18 +53,32 @@ class UserRepositoryImpl() : UserRepository {
         }
     }
 
-    fun shareNewTask(taskID: String, email: String) {
-        val tasks = userLiveData.value?.tasks
-        tasks?.add(taskID)
-        userLiveData.value?.uid?.let {
-            Firebase.firestore.collection("users").document(it).update("tasks", tasks)
-        }
+    override suspend fun shareNewTask(id: String, listOfTasks: ArrayList<String>): Task<QuerySnapshot> {
+        val res =
+            Firebase.firestore.collection("tasks").whereIn(FieldPath.documentId(), listOfTasks)
+                .get().addOnCompleteListener {
+                when {
+                    it.isSuccessful -> {
+                        if (!it.result.documents.isEmpty()) {
+                            for (i in 0 until listOfTasks.size) {
+                                val recipientID = it.result.documents[i].id
+                                val recipientRef =
+                                    Firebase.firestore.collection("tasks").document(recipientID)
+                                recipientRef.update("user_id", FieldValue.arrayUnion(id))
+                            }
+                        }
+                    }
+                }
+            }
+
+        return res
     }
 
-    override suspend fun shareTask(
+     suspend fun shareTask(
         gmail: String,
         listOfTasks: ArrayList<String>
     ): Task<QuerySnapshot> {
+        shareNewTask(gmail, listOfTasks)
         val res = Firebase.firestore.collection("users").whereEqualTo("email", gmail).get()
             .addOnCompleteListener {
                 when {

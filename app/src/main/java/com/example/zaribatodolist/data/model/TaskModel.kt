@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class TaskModel(
     val title: String = "",
     val isCompleted: Boolean = false,
-    val user_id: String = "",
+    val user_id: List<String> = emptyList(),
     var uid: String = "",
     val note: String = "",
     val list_id: String = "",

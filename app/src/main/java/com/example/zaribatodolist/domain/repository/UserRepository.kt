@@ -14,5 +14,5 @@ interface UserRepository {
     suspend fun createUser(user: User): Task<Void>?
     val userLiveData: MutableLiveData<User>
     fun addNewTask(taskID: String)
-    suspend fun shareTask(gmail: String, listOfTasks: ArrayList<String>) : Task<QuerySnapshot>
+    suspend fun shareNewTask(gmail: String, listOfTasks: ArrayList<String>) : Task<QuerySnapshot>
 }

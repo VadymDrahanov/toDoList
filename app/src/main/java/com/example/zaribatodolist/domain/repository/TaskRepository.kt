@@ -15,10 +15,11 @@ interface TaskRepository {
     val tasksLiveData: MutableLiveData<ArrayList<TaskModel>>
 
     fun getTasks1(params: GetTasksParams): Flow<MutableList<TaskModel>>
+    fun getTasks2(params: GetTasksParams): Flow<MutableList<TaskModel>>
     fun addTask(task: TaskModel)
 
     suspend fun addTask(task: SaveTaskParam): Task<DocumentReference>
-    suspend fun getTasks(uid: String): Task<QuerySnapshot>
+    //suspend fun getTasks(uid: String): Task<QuerySnapshot>
     fun getTasksFromStorage(): ArrayList<TaskModel>
 
     fun removeTasks(tasks: ArrayList<TaskModel>)

@@ -1,16 +1,13 @@
 package com.example.zaribatodolist.presentation.taskDetails
 
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.example.zaribatodolist.R
 import com.example.zaribatodolist.databinding.FragmentTaskDetailsBinding
 import com.example.zaribatodolist.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,11 +26,11 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
         _binding = getFragmentBinding(inflater, container)
         val view = binding.root
         val amount = args.taskModel
-        viewModel.getTask(amount.uid)
+        viewModel.getTask(amount)
 
         viewModel.tasksLiveData.observe(viewLifecycleOwner) {
-            binding.checkBoxTaskNameDetails.isChecked = it.isCompleted
-            binding.checkBoxTaskNameDetails.text = it.title
+            binding.CheckBoxDetails.isChecked = it.isCompleted
+            binding.taskNameDetails.text = it.title
             binding.editTextNotes.setText(it.note)
         }
 
@@ -42,28 +39,37 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>() {
                 .popBackStack();
         }
 
-        binding.editTextNotes.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(s: Editable) {
-                viewModel.handleNoteChange(s.toString())
-            }
-
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-            }
-        })
-
-        binding.checkBoxTaskNameDetails.setOnClickListener {
-            viewModel.handleCheckBoxClick()
+        binding.confirmButtonID.setOnClickListener {
+            viewModel.handleConfirmButtonClick(
+                binding.editTextNotes.text.toString(),
+                binding.CheckBoxDetails.isChecked
+            )
         }
+
+//        binding.editTextNotes.addTextChangedListener(object : TextWatcher {
+//
+//            override fun afterTextChanged(s: Editable) {
+//                viewModel.handleNoteChange(s.toString())
+//            }
+//
+//            override fun beforeTextChanged(
+//                s: CharSequence, start: Int,
+//                count: Int, after: Int
+//            ) {
+//            }
+//
+//            override fun onTextChanged(
+//                s: CharSequence, start: Int,
+//                before: Int, count: Int
+//            ) {
+//            }
+//        })
+//
+//        binding.CheckBoxDetails.setOnClickListener {
+//            if (!binding.CheckBoxDetails.isChecked) {
+//                viewModel.handleCheckBoxClick()
+//            }
+//        }
         return view
     }
 

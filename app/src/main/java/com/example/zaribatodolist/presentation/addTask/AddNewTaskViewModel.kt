@@ -20,7 +20,9 @@ class AddNewTaskViewModel @Inject constructor(
     BaseViewModel<AddNewTaskUIState>() {
 
     fun handleAddNewTask(taskTitle: String, uid: String) {
-        addTaskUseCase.invoke(TaskModel(title = taskTitle, false, uid, getRandomString(20), "", getCurrentListUseCase.invoke()))
+        val list = ArrayList<String>()
+        list.add(uid)
+        addTaskUseCase.invoke(TaskModel(title = taskTitle, isCompleted = false, user_id =  list, uid= getRandomString(20), "", getCurrentListUseCase.invoke()))
 
 //        viewModelScope.launch {
 //            val list_id = getCurrentListUseCase.invoke()

@@ -1,0 +1,243 @@
+[33mcommit 4edd5de5a4afa532fe20197630d9a6f015f72156[m[33m ([m[1;36mHEAD -> [m[1;32mrefactor/improved-repository[m[33m)[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Mon Jul 11 16:02:13 2022 +0300
+
+    Revert ""share" and "addNewList" dialog"
+    
+    This reverts commit 69e64d4d480711fabe7c51b166ad0e3b660fc0ba.
+
+[33mcommit 69e64d4d480711fabe7c51b166ad0e3b660fc0ba[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Fri Jul 8 17:19:40 2022 +0300
+
+    "share" and "addNewList" dialog
+
+[33mcommit 538d27dc6a3228ccf481b239d54ca41781cf2095[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Fri Jul 8 17:04:58 2022 +0300
+
+    new add new task realization
+
+[33mcommit d8f1f8b36c191826b7d4ad8c927245a59f884874[m
+Author: EAdemov <e.ademov@casualino.com>
+Date:   Fri Jul 8 16:00:51 2022 +0300
+
+    feature: adding tasks and observe with filter
+
+[33mcommit fe7eeb1f57e628731d1e89999b7164ed5693bd13[m
+Author: EAdemov <e.ademov@casualino.com>
+Date:   Fri Jul 8 12:24:03 2022 +0300
+
+    refactoring: observing changes in repository
+
+[33mcommit 1620cdcb23abab0b2074f48303d483df00fdcf66[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Thu Jul 7 18:00:03 2022 +0300
+
+    Share Query upgrade.
+    Bag fixes
+
+[33mcommit 125b2e2bd6a09b94057d3b1ceda8c3b178f3fddc[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Thu Jul 7 15:29:06 2022 +0300
+
+    Custom alert dialog upgrade
+
+[33mcommit 9fd9f50308ceb273aef1e35207dc01e4c011d3b5[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Thu Jul 7 14:28:40 2022 +0300
+
+    Share by gmail
+
+[33mcommit 83da1c8b7cc52678e02e6a7cf12dd034b6cf65fe[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Wed Jul 6 17:01:11 2022 +0300
+
+    Bag fix
+
+[33mcommit a59668bda1f6affa4ed2d1075efa90cf706547ef[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Wed Jul 6 16:51:20 2022 +0300
+
+    Multiple selection
+    Tasks remove
+
+[33mcommit 72ad708c59b996522b189c87c26ff8c800d00234[m
+Author: VadymDrahanov <v.drahanov@casualino.com>
+Date:   Wed Jul 6 11:41:25 2022 +0300
+
+    Test commit3
+
+[33mcommit fcb974a96fa40015159f1f996c348da3cb983a71[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jul 6 10:18:10 2022 +0300
+
+    Completed Fragment Update.
+    Completed View model update.
+
+[33mcommit 9a44081cd666e97e77a7fcbcfc8ca0b8c4447647[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jul 6 09:57:38 2022 +0300
+
+    Completed Fragment Update.
+    Completed View model update.
+
+[33mcommit 452741f95da726774be30d455cc8eeb084720e66[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jul 5 17:56:00 2022 +0300
+
+    Filter by list realization. No logic into view and viewmodel
+
+[33mcommit 2a95ad36056583a2be7fbb46bec159e0b3649b34[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jul 5 17:32:20 2022 +0300
+
+    Filter in use case realization
+
+[33mcommit c34a6ef0ed518330c9e4e4d5847ba15cd6b9e589[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jul 5 16:49:20 2022 +0300
+
+    List screen.
+    List Repo
+
+[33mcommit 909430abc6fe03da8cf6b6f774be563cf9945938[m
+Author: Vadym Drahanov <v>
+Date:   Mon Jul 4 15:55:04 2022 +0300
+
+    Details screen update.
+    Navigation Screen Creating.
+
+[33mcommit bd800b697ad94cdab9bff178b87baa8aa5952535[m
+Author: Vadym Drahanov <v>
+Date:   Mon Jul 4 15:54:57 2022 +0300
+
+    Details screen update.
+    Navigation Screen Creating.
+
+[33mcommit de157b7e891ebbbd13d2297b2b801ac65640c763[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jul 1 18:05:53 2022 +0300
+
+    details fragment, animations, design updates, sign out fragment finishing, bag fix
+
+[33mcommit 48537ce702ab5573a9119e188fe57da616861919[m
+Author: Vadym Drahanov <v>
+Date:   Thu Jun 30 15:36:26 2022 +0300
+
+    Live Data in repo
+    rv in completed and to do lists
+
+[33mcommit 0a10c233f27bc0e05c411e6e3e8b6a3d78d91a7c[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jun 28 13:58:54 2022 +0300
+
+    Work with UI
+
+[33mcommit e35375c38bc5b2d0fe3ef82ddc2a6c6f11049c40[m
+Author: Vadym Drahanov <v>
+Date:   Mon Jun 27 17:29:00 2022 +0300
+
+    View Pager realization
+
+[33mcommit c9b01fc0a97554958012498c85645a5be778442a[m
+Author: Vadym Drahanov <v>
+Date:   Mon Jun 27 14:02:15 2022 +0300
+
+    Fast login implementation
+
+[33mcommit 28782da93b828148e8a195f587ceb9ba69638877[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jun 24 18:13:22 2022 +0300
+
+    Sign Out realization
+
+[33mcommit 050d3a83706dcf044391488bf8eb522391d5c3f1[m
+Author: Vadym Drahanov <v>
+Date:   Thu Jun 23 17:24:07 2022 +0300
+
+    Use case integration.
+
+[33mcommit f91150758246f803144dc0461da13f191933bf94[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 22 12:26:37 2022 +0300
+
+    UI State
+
+[33mcommit b0f56424f32168bb8a93a0074033ac386c2b24ba[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jun 21 16:23:42 2022 +0300
+
+    Repos interfaces for domain
+
+[33mcommit cac04285c559ddf99ba4d3a2adecdc06934faa8b[m
+Author: Vadym Drahanov <v>
+Date:   Tue Jun 21 16:22:09 2022 +0300
+
+    DI, Base ViewModel
+
+[33mcommit 0ef2980ac47a18af6ffe1d92ec162196f1a50364[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jun 17 14:03:45 2022 +0300
+
+    BaseFragment sample realisation. Check HolderFragment.kt
+
+[33mcommit 91c2f021837e1cb91051484d8984ea47d293d584[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jun 17 10:58:40 2022 +0300
+
+    test commit
+
+[33mcommit fae54e75b763bc5a6f144c4877f8610efed6c3e3[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jun 17 09:18:29 2022 +0300
+
+    Auth Fragment realisation
+
+[33mcommit 5e155696d942e785567203d523794194212e012f[m
+Author: Vadym Drahanov <v>
+Date:   Fri Jun 17 09:17:51 2022 +0300
+
+    Auth Fragment realisation
+
+[33mcommit 4b9cca7830f358cff72582525e948a37918d4532[m
+Author: Vadym Drahanov <v>
+Date:   Thu Jun 16 14:11:15 2022 +0300
+
+    custom view model factory
+
+[33mcommit ffb483b61abc0437e4a8abddc7ca0f4b4d4b3bf9[m
+Author: Vadym Drahanov <v>
+Date:   Thu Jun 16 11:09:03 2022 +0300
+
+    Google sign in realisation(finished)
+
+[33mcommit 35cd345c931c389522646953c932cde20185486e[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 15 15:01:41 2022 +0300
+
+    Google sign in realisation
+
+[33mcommit 13d61e6d88a3bc52992ce87651fcb8ab1091d06b[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 15 11:54:15 2022 +0300
+
+    Returning if str from repos realisation
+
+[33mcommit 6a18a9900a7a8de92c20965e1bc7be6e00f8c3b0[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 15 11:28:36 2022 +0300
+
+    ViewModel model and repos communication
+
+[33mcommit ca71a8e1769c81c3ff679b0d184bb3a5659be10f[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 15 11:18:43 2022 +0300
+
+    ViewModel args and view model factory sample
+
+[33mcommit 1df3a46be2a7bed6f9e1766a87c5b260e3f82bd6[m
+Author: Vadym Drahanov <v>
+Date:   Wed Jun 15 10:27:57 2022 +0300
+
+    Initial commit

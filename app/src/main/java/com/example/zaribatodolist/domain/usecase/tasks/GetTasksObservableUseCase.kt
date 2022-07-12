@@ -13,7 +13,8 @@ class GetTasksObservableUseCase @Inject constructor(
 
 data class GetTasksParams(
     val userId: String,
-    val completionState: TaskCompletionState
+    val userEmail: String,
+    val completionState: TaskCompletionState,
 )
 
 enum class TaskCompletionState {

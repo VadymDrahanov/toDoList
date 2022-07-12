@@ -20,18 +20,28 @@ class TaskDetailsViewModel @Inject constructor(
 
     val tasksLiveData: MutableLiveData<TaskModel> = MutableLiveData()
 
-    fun getTask(id: String) {
-        val res = getTasksFromStorage.invoke(id)
-        if (res != null) {
-            tasksLiveData.value = res
-        }
+    fun getTask(task: TaskModel) {
+        tasksLiveData.value = task
+//        val res = getTasksFromStorage.invoke(id)
+//        if (res != null) {
+//            tasksLiveData.value = res
+//        }
     }
 
-    fun handleCheckBoxClick(){
+    private fun handleCheckBoxClick() {
         updateTaskCompletionUseCase.invoke(id = tasksLiveData.value!!.uid)
     }
 
-    fun handleNoteChange(note: String) {
+    fun handleConfirmButtonClick(noteText: String, confirmationState: Boolean) {
+        if (!noteText.equals(tasksLiveData.value?.note)) {
+            handleNoteChange(noteText)
+        }
+        if (confirmationState != tasksLiveData.value?.isCompleted) {
+            handleCheckBoxClick()
+        }
+    }
+
+    private fun handleNoteChange(note: String) {
         if (!note.equals(tasksLiveData.value!!.note)) {
             updateTaskNoteUseCase.invoke(newNote = note, id = tasksLiveData.value!!.uid)
         }

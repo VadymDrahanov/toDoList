@@ -96,9 +96,6 @@ class AuthViewModel @Inject constructor(
         uiState.value = AuthUIState(true, false)
 
         viewModelScope.launch {
-            getUserTasksUseCase.invoke(uid).addOnCompleteListener {
-                when {
-                    it.isSuccessful -> {
                         viewModelScope.launch {
 
                             getListsUseCase.invoke(uid).addOnCompleteListener { list_query ->
@@ -113,13 +110,9 @@ class AuthViewModel @Inject constructor(
                                 }
                             }
                         }
-                    }
-                    it.isCanceled -> {
-                        uiState.value = AuthUIState(false, false)
-                        Log.i("Error", "Something went wrong")
-                    }
-                }
-            }
+
+
+
             getUserInfoUseCase(uid)!!.addOnCompleteListener { getUser ->
                 when {
                     getUser.isSuccessful -> {

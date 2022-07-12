@@ -9,14 +9,26 @@
     <!-- TODO: Update blank fragment layout -->
 
     <View
-        android:id="@+id/view3"
+        android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:background="#9C9898"
         app:layout_constraintEnd_toEndOf="@+id/starCheckBox"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/checkBoxTaskName"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxTaskNameDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#9C9898"
+        app:layout_constraintEnd_toEndOf="@+id/starCheckBox"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/checkBoxTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/taskNameDetails" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
@@ -40,51 +52,47 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="16dp"
             android:text="Details"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backbtn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.432" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="#9C9898"
-            app:layout_constraintTop_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <CheckBox
-        android:id="@+id/checkBoxTaskNameDetails"
+    <TextView
+        android:id="@+id/taskNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/abel"
+        android:fontFamily="@font/acme"
         android:text="Task Name"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout" />
 
     <CheckBox
-        android:id="@+id/starCheckBoxDetails"
+        android:id="@+id/CheckBoxDetails"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="16dp"
         android:button="@drawable/custom_checkbox"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxTaskNameDetails"
+        app:layout_constraintBottom_toBottomOf="@+id/taskNameDetails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxTaskNameDetails"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/taskNameDetails"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editTextNotes"
         android:layout_width="0dp"
         android:layout_height="248dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:fontFamily="@font/abel"
         android:gravity="left"
@@ -93,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <TextView
         android:id="@+id/textView4"
@@ -113,8 +121,25 @@
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_baseline_today_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <Button
+        android:id="@+id/confirmButtonID"
+        android:layout_width="258dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/circle_shape"
+        android:backgroundTint="@color/purple_200"
+        android:padding="10dp"
+        android:text="Confirm Changes"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNotes"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

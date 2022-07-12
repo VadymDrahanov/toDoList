@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.zaribatodolist.data.model.SaveTaskParam
 import com.example.zaribatodolist.data.model.TaskModel
+import com.example.zaribatodolist.data.model.User
 import com.example.zaribatodolist.domain.repository.TaskRepository
 import com.example.zaribatodolist.domain.usecase.tasks.GetTasksParams
 import com.example.zaribatodolist.domain.usecase.tasks.TaskCompletionState
@@ -11,6 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.FieldPath.documentId
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -30,17 +32,19 @@ class TasksRepositoryImpl(
     override fun getTasks1(params: GetTasksParams): Flow<MutableList<TaskModel>> = callbackFlow {
         var eventsCollection: Query? = null
         try {
+
+
             eventsCollection = when (params.completionState) {
                 TaskCompletionState.COMPLETED -> {
                     fireStore
                         .collection("tasks")
-                        .whereEqualTo("user_id", params.userId)
+                        .whereArrayContains("user_id", params.userId)
                         .whereEqualTo("completed", true)
                 }
                 TaskCompletionState.NOT_COMPLETED -> {
                     fireStore
                         .collection("tasks")
-                        .whereEqualTo("user_id", params.userId)
+                        .whereArrayContains("user_id", params.userId)
                         .whereEqualTo("completed", false)
                 }
                 else -> {
@@ -78,12 +82,67 @@ class TasksRepositoryImpl(
         }
     }
 
+    override fun getTasks2(params: GetTasksParams) = callbackFlow {
+
+        var eventsCollection: Query? = null
+        try {
+            eventsCollection = when (params.completionState) {
+
+                TaskCompletionState.COMPLETED -> {
+                    fireStore.collection("users").whereEqualTo(documentId(), params.userId)
+                }
+                TaskCompletionState.NOT_COMPLETED -> {
+                    fireStore.collection("users").whereEqualTo(documentId(), params.userId)
+                }
+                else -> {
+                    fireStore.collection("users").whereEqualTo(documentId(), params.userId)
+                }
+            }
+        } catch (e: Throwable) {
+            close(e)
+        }
+
+        val listener = eventsCollection?.addSnapshotListener { snapshot, _ ->
+            if (snapshot == null) return@addSnapshotListener
+
+            try {
+                val list = mutableListOf<TaskModel>()
+                val listOfKeys = snapshot.documents.get(0).data?.get("tasks") as ArrayList<String>
+                Log.i("----------------------------------------------", listOfKeys.size.toString())
+
+                if (listOfKeys.isNotEmpty()) {
+                    fireStore.collection("tasks").whereIn(documentId(), listOfKeys).get()
+                        .addOnCompleteListener {
+                            for (i in 0 until listOfKeys.size) {
+                                it.result.documents.get(i).toObject<TaskModel>()
+                                    ?.let { it1 -> list.add(it1) }
+                            }
+                        }
+
+                }
+                Log.i("----------------------------------------------", list.size.toString())
+
+                trySend(list)
+
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+
+        awaitClose {
+            listener?.remove()
+        }
+
+    }
+
     override fun addTask(task: TaskModel) {
         //fireStore.collection("tasks").add(task)
         try {
             fireStore.collection("tasks")
-                .document(task.uid)
-                .set(task)
+                .add(task).addOnCompleteListener {
+//                    fireStore.collection("users").document(task.user_id)
+//                        .update("tasks", FieldValue.arrayUnion(it.result.id))
+                }
         } catch (e: FirebaseFirestoreException) {
             e.printStackTrace()
         }
@@ -165,110 +224,110 @@ class TasksRepositoryImpl(
             }
     }
 
-    override suspend fun getTasks(uid: String): Task<QuerySnapshot> {
-
-        userTasks.clear()
-        tasksLiveData.value?.clear()
-        tasksLiveData.value = userTasks
-        //val temp = db.collection("tasks").get()
-        lateinit var taskResult: Task<QuerySnapshot>
-
-        taskResult = db.collection("users").whereEqualTo("uid", uid).get()
-            .addOnCompleteListener { userQuery ->
-                when {
-                    userQuery.isSuccessful -> {
-
-                        taskResult = userQuery
-
-                        val listOfTaskKeys =
-                            userQuery.result.documents[0].data?.get("tasks") as ArrayList<*>
-
-                        if (listOfTaskKeys.isNotEmpty()) {
-                            db.collection("tasks").whereIn(documentId(), listOfTaskKeys).get()
-                                .addOnCompleteListener { taskQuery ->
-                                    Log.i(TAG, "Query Call")
-
-                                    when {
-                                        taskQuery.isSuccessful -> {
-                                            Log.i(TAG, "Query is Successful")
-
-                                            taskResult = taskQuery
-                                            for (i in 0..taskQuery.getResult().documents.size - 1) {
-
-                                                val doc =
-                                                    taskQuery.getResult().documents.get(i).data
-
-                                                val model = TaskModel(
-                                                    title = doc!!.get("title").toString(),
-                                                    isCompleted = doc.get("completed") as Boolean,
-                                                    user_id = doc.get("user_id").toString(),
-                                                    note = doc.get("note").toString(),
-                                                    uid = taskQuery.getResult().documents.get(i).id,
-                                                    list_id = doc.get("list_id").toString()
-                                                )
-                                                userTasks.add(model)
-                                                tasksLiveData.value = userTasks
-                                            }
-                                        }
-                                        taskQuery.isCanceled -> {
-                                            Log.i(TAG, "Query is canceled")
-                                            taskResult = taskQuery
-                                        }
-
-                                    }
-                                }
-                        }
-                    }
-                    userQuery.isCanceled -> {
-                        taskResult = userQuery
-                    }
-                }
-
-            }
-        return taskResult
-//        var listOfTaskKeys = ArrayList<String>()
-
-//        userRef.addOnCompleteListener {
-//            listOfTaskKeys =
-//                it.result.documents[0].data!!["tasks"] as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */
+//    override suspend fun getTasks(uid: String): Task<QuerySnapshot> {
 //
-//            if (listOfTaskKeys.isNotEmpty()) {
-//                val res = db.collection("tasks").whereIn(documentId(), listOfTaskKeys).get()
+//        userTasks.clear()
+//        tasksLiveData.value?.clear()
+//        tasksLiveData.value = userTasks
+//        //val temp = db.collection("tasks").get()
+//        lateinit var taskResult: Task<QuerySnapshot>
 //
-//                userRef.addOnSuccessListener {
-//                    Log.i(
-//                        "Query status",
-//                        "res2: " + listOfTaskKeys
-//                    )
-//                }
+//        taskResult = db.collection("users").whereEqualTo("uid", uid).get()
+//            .addOnCompleteListener { userQuery ->
+//                when {
+//                    userQuery.isSuccessful -> {
 //
-//                res.addOnCompleteListener {
-//                    for (i in 0..it.getResult().documents.size - 1) {
-//                        val doc = res.getResult().documents.get(i).data
-//                        val model = TaskModel(
-//                            title = doc!!.get("title").toString(),
-//                            isCompleted = doc.get("completed") as Boolean,
-//                            user_id = doc.get("user_id").toString(),
-//                            note = doc.get("note").toString(),
-//                            uid = res.getResult().documents.get(i).id,
-//                            list_id = doc.get("list_id").toString()
-//                        )
-//                        userTasks.add(model)
+//                        taskResult = userQuery
+//
+//                        val listOfTaskKeys =
+//                            userQuery.result.documents[0].data?.get("tasks") as ArrayList<*>
+//
+//                        if (listOfTaskKeys.isNotEmpty()) {
+//                            db.collection("tasks").whereIn(documentId(), listOfTaskKeys).get()
+//                                .addOnCompleteListener { taskQuery ->
+//                                    Log.i(TAG, "Query Call")
+//
+//                                    when {
+//                                        taskQuery.isSuccessful -> {
+//                                            Log.i(TAG, "Query is Successful")
+//
+//                                            taskResult = taskQuery
+//                                            for (i in 0..taskQuery.getResult().documents.size - 1) {
+//
+//                                                val doc =
+//                                                    taskQuery.getResult().documents.get(i).data
+//
+//                                                val model = TaskModel(
+//                                                    title = doc!!.get("title").toString(),
+//                                                    isCompleted = doc.get("completed") as Boolean,
+//                                                    user_id = doc.get("user_id").toString(),
+//                                                    note = doc.get("note").toString(),
+//                                                    uid = taskQuery.getResult().documents.get(i).id,
+//                                                    list_id = doc.get("list_id").toString()
+//                                                )
+//                                                userTasks.add(model)
+//                                                tasksLiveData.value = userTasks
+//                                            }
+//                                        }
+//                                        taskQuery.isCanceled -> {
+//                                            Log.i(TAG, "Query is canceled")
+//                                            taskResult = taskQuery
+//                                        }
+//
+//                                    }
+//                                }
+//                        }
 //                    }
-//                    Log.i(
-//                        "----------------------------------------------------------------",
-//                        "User tasks are changed, new size are: " + tasksLiveData.value?.size.toString()
-//                    )
+//                    userQuery.isCanceled -> {
+//                        taskResult = userQuery
+//                    }
 //                }
+//
 //            }
+//        return taskResult
+////        var listOfTaskKeys = ArrayList<String>()
 //
-//            tasksLiveData.value = userTasks
+////        userRef.addOnCompleteListener {
+////            listOfTaskKeys =
+////                it.result.documents[0].data!!["tasks"] as ArrayList<String> /* = java.util.ArrayList<kotlin.String> */
+////
+////            if (listOfTaskKeys.isNotEmpty()) {
+////                val res = db.collection("tasks").whereIn(documentId(), listOfTaskKeys).get()
+////
+////                userRef.addOnSuccessListener {
+////                    Log.i(
+////                        "Query status",
+////                        "res2: " + listOfTaskKeys
+////                    )
+////                }
+////
+////                res.addOnCompleteListener {
+////                    for (i in 0..it.getResult().documents.size - 1) {
+////                        val doc = res.getResult().documents.get(i).data
+////                        val model = TaskModel(
+////                            title = doc!!.get("title").toString(),
+////                            isCompleted = doc.get("completed") as Boolean,
+////                            user_id = doc.get("user_id").toString(),
+////                            note = doc.get("note").toString(),
+////                            uid = res.getResult().documents.get(i).id,
+////                            list_id = doc.get("list_id").toString()
+////                        )
+////                        userTasks.add(model)
+////                    }
+////                    Log.i(
+////                        "----------------------------------------------------------------",
+////                        "User tasks are changed, new size are: " + tasksLiveData.value?.size.toString()
+////                    )
+////                }
+////            }
+////
+////            tasksLiveData.value = userTasks
+////
 //
-
-//            )
-//        }
-//        return temp
-    }
+////            )
+////        }
+////        return temp
+//    }
 
     override fun getTasksFromStorage(): ArrayList<TaskModel> {
         return userTasks

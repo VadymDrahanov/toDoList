@@ -41,7 +41,9 @@ class ToDoListViewModel @Inject constructor(
         getTasksObservableUseCase.invoke(
             GetTasksParams(
                 userId = Firebase.auth.currentUser?.uid ?: "",
-                completionState = TaskCompletionState.NOT_COMPLETED
+                completionState = TaskCompletionState.NOT_COMPLETED,
+                userEmail = Firebase.auth.currentUser?.email?: ""
+
             )
         ).collect {
             if (it.isNotEmpty()) {

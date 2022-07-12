@@ -32,7 +32,8 @@ class CompletedListViewModel @Inject constructor(
         getTasksObservableUseCase.invoke(
             GetTasksParams(
                 userId = Firebase.auth.currentUser?.uid ?: "",
-                completionState = TaskCompletionState.COMPLETED
+                completionState = TaskCompletionState.COMPLETED,
+                userEmail = Firebase.auth.currentUser?.email?: ""
             )
         ).collect {
             if (it.isNotEmpty()) {

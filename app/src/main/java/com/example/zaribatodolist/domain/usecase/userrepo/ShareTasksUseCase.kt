@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class ShareTasksUseCase @Inject constructor(private val userRepository: UserRepository) {
     suspend fun invoke(userGmail: String, listOfTasks: ArrayList<String>) : Task<QuerySnapshot> {
-        return userRepository.shareTask(userGmail, listOfTasks)
+        return userRepository.shareNewTask(userGmail, listOfTasks)
     }
 }

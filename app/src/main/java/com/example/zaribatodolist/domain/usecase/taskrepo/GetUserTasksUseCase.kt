@@ -6,7 +6,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
 class GetUserTasksUseCase @Inject constructor(private val taskRepository: TaskRepository) {
-    suspend fun invoke(uid: String): Task<QuerySnapshot> {
-        return taskRepository.getTasks(uid)
-    }
+//    suspend fun invoke(uid: String): Task<QuerySnapshot> {
+//        return taskRepository.getTasks(uid)
+//    }
 }
