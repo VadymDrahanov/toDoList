@@ -11,6 +11,7 @@ import com.example.zaribatodolist.domain.usecase.listrepo.*
 import com.example.zaribatodolist.domain.usecase.logic.FilterTaskByListUseCase
 import com.example.zaribatodolist.domain.usecase.logic.FilterTasksUseCase
 import com.example.zaribatodolist.domain.usecase.logic.IsValidShareDataUseCase
+import com.example.zaribatodolist.domain.usecase.logic.SearchTasksUseCase
 import com.example.zaribatodolist.domain.usecase.taskrepo.*
 import com.example.zaribatodolist.domain.usecase.userrepo.*
 import dagger.Module
@@ -142,9 +143,13 @@ class DomainModule {
         return ShareTasksUseCase(userRepository = userRepository)
     }
 
-
     @Provides
     fun provideIsValidDataUseCase() : IsValidShareDataUseCase {
         return IsValidShareDataUseCase()
+    }
+
+    @Provides
+    fun provideSearchTasksUseCase() : SearchTasksUseCase {
+        return SearchTasksUseCase()
     }
 }

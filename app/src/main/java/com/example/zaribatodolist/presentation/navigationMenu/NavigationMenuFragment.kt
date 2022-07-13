@@ -1,6 +1,7 @@
 package com.example.zaribatodolist.presentation.navigationMenu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
     private val viewModel: NavigationMenuViewModel by viewModels()
     private lateinit var myView: View
     private lateinit var tasksRv: RecyclerView
-
+    private var tasksList = ArrayList<TaskModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -43,21 +44,31 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
         binding.tasksRv.layoutManager = LinearLayoutManager(context)
-        tasksRv = binding.tasksRv
 
         //search observer
-        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
-            val customAdapter =
-                TasksAdapter(
-                    it,
-                    { id -> onListItemClick(id) },
-                    { task -> onCardViewClick(task) },
-                    { task -> onCardViewLongClick(task) })
-            tasksRv.adapter = customAdapter
-        }
+//        viewModel.tasksLiveData.observe(viewLifecycleOwner) {
+//            val customAdapter =
+//                TasksAdapter(
+//                    it,
+//                    { id -> onListItemClick(id) },
+//                    { task -> onCardViewClick(task) },
+//                    { task -> onCardViewLongClick(task) })
+//            tasksRv.adapter = customAdapter
+//        }
+
+
+        val customAdapter =
+            TasksAdapter(
+                tasksList,
+                { id -> onListItemClick(id) },
+                { task -> onCardViewClick(task) },
+                { task -> onCardViewLongClick(task) })
+
+        binding.tasksRv.adapter = customAdapter
 
         //ui state observer
         viewModel.uiState.observe(viewLifecycleOwner) {
+
             when (it.isSearching) {
                 false -> {
                     binding.tasksRv.visibility = View.GONE
@@ -67,15 +78,20 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
                 true -> {
                     binding.tasksRv.visibility = View.VISIBLE
                     binding.layout.visibility = View.GONE
+                    // customAdapter.bindList(it.taskList)
                 }
             }
         }
 
-        viewModel.listsLiveData.observe(viewLifecycleOwner) {
-            val customAdapter = CollectionRVAdapter(it, { id -> onViewClick(id) })
-            binding.collectionRV.layoutManager = LinearLayoutManager(context)
-            binding.collectionRV.adapter = customAdapter
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            customAdapter.bindList(it)
         }
+
+//        viewModel.listsLiveData.observe(viewLifecycleOwner) {
+//            val customAdapter = CollectionRVAdapter(it, { id -> onViewClick(id) })
+//            binding.collectionRV.layoutManager = LinearLayoutManager(context)
+//            binding.collectionRV.adapter = customAdapter
+//        }
 
         binding.goToTasksLayout.setOnClickListener {
             viewModel.handleListItemClick("main")
@@ -112,35 +128,7 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
     }
 
     private fun launchCustomAlertDialog() {
-//        dialog = CustomAlertDialogWithTextField(requireContext())
-//        dialog.create()
-//        dialog.setTitle("New List")
-//
-//
-//
-//        dialog.setOnPositiveBtnClickListener {
-//            val title: String = dialog.getTextFieldResult()
-//            if (!title.isBlank() || title != " ") {
-//                viewModel.handleAddNewList(
-//                    title,
-//                    FirebaseAuth.getInstance().currentUser!!.uid.toString()
-//                )
-//            }
-//        }
-//
-//        dialog.show()
-//        val dialog = CustomAlertDialogWithTextField.MBuilder(requireContext())
-//
-//
-//        val view = layoutInflater.inflate(R.layout.fragment_dialog,null)
-//        dialog.create()
-//        val d = dialog.setView(view)
-//
-//        d.setPositiveButton("text") { it, i ->
-//
-//        }
-//
-//        dialog.show()
+
 
         val dialog = CustomDialog(requireContext())
         dialog.setOnPositiveBtnClickListener {
@@ -182,7 +170,6 @@ class NavigationMenuFragment : BaseFragment<FragmentNavigationMenuBinding>(),
 
     override fun onQueryTextChange(newText: String?): Boolean {
         viewModel.handleSearch(newText)
-
         return true
     }
 

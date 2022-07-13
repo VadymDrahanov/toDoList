@@ -33,7 +33,6 @@ class TasksRepositoryImpl(
         var eventsCollection: Query? = null
         try {
 
-
             eventsCollection = when (params.completionState) {
                 TaskCompletionState.COMPLETED -> {
                     fireStore
@@ -65,7 +64,6 @@ class TasksRepositoryImpl(
                 snapshot.documents.forEach {
                     val model = it.toObject(TaskModel::class.java)
                     model?.uid = it.id
-
                     if (model != null) {
                         list.add(model)
                     }
